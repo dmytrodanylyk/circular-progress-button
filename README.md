@@ -51,3 +51,4 @@ SOFTWARE.
 [User Guide]:https://github.com/dmytrodanylyk/circular-progress-button/wiki/User-Guide
 
 [![Analytics](https://ga-beacon.appspot.com/UA-44382495-3/circular-progress-button/readme)](https://github.com/igrigorik/ga-beacon)
+<a href='https://pledgie.com/campaigns/25568'><img alt='Click here to lend your support to: Android Open Source and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/25568.png?skin_name=chrome' border='0' ></a>
