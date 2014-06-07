@@ -49,3 +49,5 @@ SOFTWARE.
 [Home]:https://github.com/dmytrodanylyk/circular-progress-button/wiki
 [Screenshots]:https://github.com/dmytrodanylyk/circular-progress-button/wiki/Screenshots
 [User Guide]:https://github.com/dmytrodanylyk/circular-progress-button/wiki/User-Guide
+
+[![Analytics](https://ga-beacon.appspot.com/UA-44382495-3/circular-progress-button/readme)](https://github.com/igrigorik/ga-beacon)
