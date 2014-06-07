@@ -20,6 +20,12 @@ The lib **SOON** will be available on Maven Central, stay tuned!
 
 If you want to contribute to this library make sure you send pull request to **dev** branch.
 
+### Donation
+
+*"Don’t feel shy asking for donations, you worked hard for it!"*
+
+<a href='https://pledgie.com/campaigns/25568'><img alt='Click here to lend your support to: Android Open Source and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/25568.png?skin_name=chrome' border='0' ></a>
+
 ### License
 
 ```
@@ -49,3 +55,5 @@ SOFTWARE.
 [Home]:https://github.com/dmytrodanylyk/circular-progress-button/wiki
 [Screenshots]:https://github.com/dmytrodanylyk/circular-progress-button/wiki/Screenshots
 [User Guide]:https://github.com/dmytrodanylyk/circular-progress-button/wiki/User-Guide
+
+[![Analytics](https://ga-beacon.appspot.com/UA-44382495-3/circular-progress-button/readme)](https://github.com/igrigorik/ga-beacon)

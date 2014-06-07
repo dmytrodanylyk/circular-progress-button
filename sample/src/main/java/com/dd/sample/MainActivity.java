@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
         });
     }
 
-    private void simulateErrorProgress(final CircularProgressButton button) {
+    private void simulateSuccessProgress(final CircularProgressButton button) {
         ValueAnimator widthAnimation = ValueAnimator.ofInt(1, 100);
         widthAnimation.setDuration(1500);
         widthAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -78,7 +78,7 @@ public class MainActivity extends Activity {
         widthAnimation.start();
     }
 
-    private void simulateSuccessProgress(final CircularProgressButton button) {
+    private void simulateErrorProgress(final CircularProgressButton button) {
         ValueAnimator widthAnimation = ValueAnimator.ofInt(1, 99);
         widthAnimation.setDuration(1500);
         widthAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
