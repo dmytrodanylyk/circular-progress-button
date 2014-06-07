@@ -1,0 +1,18 @@
+<resources>
+
+    <declare-styleable name="CircularProgressButton">
+        <attr name="textComplete" format="string"/>
+        <attr name="textIdle" format="string"/>
+        <attr name="textError" format="string"/>
+        <attr name="colorProgress" format="color"/>
+        <attr name="colorIndicator" format="color"/>
+        <attr name="colorIndicatorBackground" format="color"/>
+        <attr name="colorComplete" format="color"/>
+        <attr name="colorError" format="color"/>
+        <attr name="colorIdle" format="color"/>
+        <attr name="iconError" format="reference"/>
+        <attr name="iconComplete" format="reference"/>
+        <attr name="cornerRadius" format="dimension"/>
+    </declare-styleable>
+
+</resources>
