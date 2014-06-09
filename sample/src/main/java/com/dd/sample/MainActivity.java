@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import com.dd.CircularProgressButton;
-import com.dd.circular.progress.button.sample.R;
 
 public class MainActivity extends Activity {
 
