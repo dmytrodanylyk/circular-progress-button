@@ -35,6 +35,7 @@ public class CircularProgressButton extends Button {
     private int mIconComplete;
     private int mIconError;
     private float mCornerRadius;
+    private int mStrokeWidth;
 
     private enum State {
         PROGRESS, IDLE, COMPLETE, ERROR;
@@ -61,6 +62,8 @@ public class CircularProgressButton extends Button {
     }
 
     private void init(Context context, AttributeSet attributeSet) {
+        mStrokeWidth = (int) getContext().getResources().getDimension(R.dimen.stroke_width);
+
         initAttributes(context, attributeSet);
 
         mMaxProgress = 100;
@@ -69,6 +72,8 @@ public class CircularProgressButton extends Button {
         setText(mIdleText);
 
         background = (GradientDrawable) context.getResources().getDrawable(R.drawable.background).mutate();
+        background.setColor(mColorIdle);
+        background.setStroke(mStrokeWidth, mColorIdle);
         background.setCornerRadius(mCornerRadius);
         setBackgroundCompat(background);
     }
@@ -139,8 +144,7 @@ public class CircularProgressButton extends Button {
 
     private RectF getRect() {
         if (mRectF == null) {
-            int strokeWidth = (int) getResources().getDimension(R.dimen.stroke_width);
-            int index = strokeWidth / 2;
+            int index = mStrokeWidth / 2;
             mRectF = new RectF(index, index, getHeight() - index, getHeight() - index);
         }
         return mRectF;
@@ -148,12 +152,11 @@ public class CircularProgressButton extends Button {
 
     private Paint createPaint() {
         if (mPaint == null) {
-            int strokeWidth = (int) getResources().getDimension(R.dimen.stroke_width);
 
             mPaint = new Paint();
             mPaint.setAntiAlias(true);
             mPaint.setStyle(Paint.Style.STROKE);
-            mPaint.setStrokeWidth(strokeWidth);
+            mPaint.setStrokeWidth(mStrokeWidth);
             mPaint.setColor(mColorIndicator);
         }
 
@@ -255,8 +258,7 @@ public class CircularProgressButton extends Button {
     }
 
     private void morphToToIdle() {
-        int strokeWidth = (int) getContext().getResources().getDimension(R.dimen.stroke_width);
-        background.setStroke(strokeWidth, mColorIdle);
+        background.setStroke(mStrokeWidth, mColorIdle);
         background.setColor(mColorIdle);
 
         removeIcon();
