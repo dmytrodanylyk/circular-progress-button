@@ -5,7 +5,6 @@ import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.graphics.drawable.GradientDrawable;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import com.dd.circular.progress.button.R;
 
@@ -27,11 +26,11 @@ class MorphingAnimation {
     private float mFromCornerRadius;
     private float mToCornerRadius;
 
-    private TextView mViewGroup;
+    private TextView mView;
     private GradientDrawable mDrawable;
 
     public MorphingAnimation(TextView viewGroup, GradientDrawable drawable) {
-        mViewGroup = viewGroup;
+        mView = viewGroup;
         mDrawable = drawable;
     }
 
@@ -73,19 +72,26 @@ class MorphingAnimation {
 
     public void start() {
         ValueAnimator widthAnimation = ValueAnimator.ofInt(mFromWidth, mToWidth);
-        widthAnimation.setDuration(ANIMATION_DURATION);
         widthAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 Integer value = (Integer) animation.getAnimatedValue();
-                ViewGroup.LayoutParams params = mViewGroup.getLayoutParams();
-                params.width = value;
-                mViewGroup.setLayoutParams(params);
+                int leftOffset;
+                int rightOffset;
+
+                if(mFromWidth > mToWidth) {
+                    leftOffset = (mFromWidth - value) / 2;
+                    rightOffset = mFromWidth - leftOffset;
+                } else {
+                    leftOffset = (mToWidth - value) / 2;
+                    rightOffset = mToWidth - leftOffset;
+                }
+
+                mDrawable.setBounds(leftOffset, 0, rightOffset, mView.getHeight());
             }
         });
 
         ValueAnimator bgColorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), mFromColor, mToColor);
-        bgColorAnimation.setDuration(ANIMATION_DURATION);
         bgColorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(final ValueAnimator animator) {
@@ -94,10 +100,9 @@ class MorphingAnimation {
 
         });
 
-        final int strokeWidth = (int) mViewGroup.getContext().getResources().getDimension(R.dimen.stroke_width);
+        final int strokeWidth = (int) mView.getContext().getResources().getDimension(R.dimen.stroke_width);
         ValueAnimator strokeColorAnimation =
                 ValueAnimator.ofObject(new ArgbEvaluator(), mFromStrokeColor, mToStrokeColor);
-        strokeColorAnimation.setDuration(ANIMATION_DURATION);
         strokeColorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(final ValueAnimator animator) {
@@ -107,7 +112,6 @@ class MorphingAnimation {
         });
 
         ValueAnimator cornerAnimation = ValueAnimator.ofFloat(mFromCornerRadius, mToCornerRadius);
-        cornerAnimation.setDuration(ANIMATION_DURATION);
         cornerAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -117,6 +121,7 @@ class MorphingAnimation {
         });
 
         AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.setDuration(ANIMATION_DURATION);
         animatorSet.playTogether(widthAnimation, bgColorAnimation, strokeColorAnimation, cornerAnimation);
         animatorSet.addListener(new Animator.AnimatorListener() {
             @Override
