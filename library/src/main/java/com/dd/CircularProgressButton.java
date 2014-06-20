@@ -166,6 +166,7 @@ public class CircularProgressButton extends Button {
     private void morphToProgress() {
         mMorphingInProgress = true;
 
+        setWidth(getWidth());
         setText(null);
 
         MorphingAnimation animation = new MorphingAnimation(this, background);

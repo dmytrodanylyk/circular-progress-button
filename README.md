@@ -2,7 +2,7 @@
 
 Android Button which can morph to Circular Progress
 
-Latest version **1.0.1**
+Latest version **1.0.2**
 
 ![](screenshots/intro.gif)
 
@@ -18,7 +18,7 @@ The lib is available on Maven Central, you can find it with [Gradle, please]
 
 ```
 dependencies {
-    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.0.1'
+    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.0.2'
 }
 ```
 
