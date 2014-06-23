@@ -1,9 +1,6 @@
 package com.dd;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
+import android.animation.*;
 import android.graphics.drawable.GradientDrawable;
 import android.widget.TextView;
 import com.dd.circular.progress.button.R;
@@ -91,34 +88,22 @@ class MorphingAnimation {
             }
         });
 
-        ValueAnimator bgColorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), mFromColor, mToColor);
-        bgColorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(final ValueAnimator animator) {
-                mDrawable.setColor((Integer) animator.getAnimatedValue());
-            }
+        ObjectAnimator bgColorAnimation = ObjectAnimator.ofInt(mDrawable, "color", mFromColor, mToColor);
+        bgColorAnimation.setEvaluator(new ArgbEvaluator());
 
-        });
 
         final int strokeWidth = (int) mView.getContext().getResources().getDimension(R.dimen.stroke_width);
         ValueAnimator strokeColorAnimation =
                 ValueAnimator.ofObject(new ArgbEvaluator(), mFromStrokeColor, mToStrokeColor);
+        strokeColorAnimation.setEvaluator(new ArgbEvaluator());
         strokeColorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(final ValueAnimator animator) {
                 mDrawable.setStroke(strokeWidth, (Integer) animator.getAnimatedValue());
             }
-
         });
 
-        ValueAnimator cornerAnimation = ValueAnimator.ofFloat(mFromCornerRadius, mToCornerRadius);
-        cornerAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                Float value = (Float) animation.getAnimatedValue();
-                mDrawable.setCornerRadius(value);
-            }
-        });
+        ObjectAnimator cornerAnimation = ObjectAnimator.ofFloat(mDrawable, "cornerRadius", mFromCornerRadius, mToCornerRadius);
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setDuration(ANIMATION_DURATION);
