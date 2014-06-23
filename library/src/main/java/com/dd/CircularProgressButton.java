@@ -130,16 +130,20 @@ public class CircularProgressButton extends Button {
 
     private RectF mRectF;
     private Paint mPaint;
+    private Path mPath;
 
     private void doDraw(Canvas canvas) {
         float sweepAngle = (360f / mMaxProgress) * mProgress;
 
         int offset = (getWidth() - getHeight()) / 2;
 
-        Path path = new Path();
-        path.addArc(getRect(), -90, sweepAngle);
-        path.offset(offset, 0);
-        canvas.drawPath(path, createPaint());
+        if(mPath == null) {
+            mPath = new Path();
+        }
+        mPath.reset();
+        mPath.addArc(getRect(), -90, sweepAngle);
+        mPath.offset(offset, 0);
+        canvas.drawPath(mPath, createPaint());
     }
 
     private RectF getRect() {
