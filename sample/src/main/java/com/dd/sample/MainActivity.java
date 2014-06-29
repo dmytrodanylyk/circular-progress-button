@@ -1,11 +1,12 @@
 package com.dd.sample;
 
+import com.dd.CircularProgressButton;
+
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import com.dd.CircularProgressButton;
 
 public class MainActivity extends Activity {
 
@@ -15,25 +16,31 @@ public class MainActivity extends Activity {
         setContentView(R.layout.ac_main);
 
         final CircularProgressButton btnWithIcons1 = (CircularProgressButton) findViewById(R.id.btnWithIcons1);
+        btnWithIcons1.setIndeterminateProgressMode(true);
         btnWithIcons1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (btnWithIcons1.getProgress() == 0) {
-                    simulateSuccessProgress(btnWithIcons1);
-                } else {
+                    btnWithIcons1.setProgress(50);
+                } else if (btnWithIcons1.getProgress() == 100) {
                     btnWithIcons1.setProgress(0);
+                } else {
+                    btnWithIcons1.setProgress(100);
                 }
             }
         });
 
         final CircularProgressButton btnWithIcons2 = (CircularProgressButton) findViewById(R.id.btnWithIcons2);
+        btnWithIcons2.setIndeterminateProgressMode(true);
         btnWithIcons2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (btnWithIcons2.getProgress() == 0) {
-                    simulateErrorProgress(btnWithIcons2);
-                } else {
+                    btnWithIcons2.setProgress(50);
+                } else if (btnWithIcons2.getProgress() == -1) {
                     btnWithIcons2.setProgress(0);
+                } else {
+                    btnWithIcons2.setProgress(-1);
                 }
             }
         });

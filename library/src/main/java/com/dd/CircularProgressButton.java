@@ -1,18 +1,16 @@
 package com.dd;
 
+import com.dd.circular.progress.button.R;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.Button;
-import com.dd.circular.progress.button.R;
 
 public class CircularProgressButton extends Button {
 
@@ -20,6 +18,8 @@ public class CircularProgressButton extends Button {
     public static final int ERROR_STATE_PROGRESS = -1;
 
     private GradientDrawable background;
+    private CircularAnimatedDrawable mAnimatedDrawable;
+    private CircularProgressDrawable mProgressDrawable;
 
     private State mState;
     private String mIdleText;
@@ -36,6 +36,7 @@ public class CircularProgressButton extends Button {
     private int mIconError;
     private float mCornerRadius;
     private int mStrokeWidth;
+    private boolean mIndeterminateProgressMode;
 
     private enum State {
         PROGRESS, IDLE, COMPLETE, ERROR;
@@ -124,47 +125,48 @@ public class CircularProgressButton extends Button {
         super.onDraw(canvas);
 
         if (mProgress > 0 && mState == State.PROGRESS && !mMorphingInProgress) {
-            doDraw(canvas);
+            if(mIndeterminateProgressMode) {
+                drawIndeterminateProgress(canvas);
+            } else {
+                drawProgress(canvas);
+            }
         }
     }
 
-    private RectF mRectF;
-    private Paint mPaint;
-    private Path mPath;
+    private void drawIndeterminateProgress(Canvas canvas) {
+        if (mAnimatedDrawable == null) {
+            int offset = (getWidth() - getHeight()) / 2;
+            mAnimatedDrawable = new CircularAnimatedDrawable(mColorIndicator, mStrokeWidth);
+            mAnimatedDrawable.setBounds(offset, 0, getWidth() - offset, getHeight());
+            mAnimatedDrawable.setCallback(this);
+            mAnimatedDrawable.start();
+        } else {
+            mAnimatedDrawable.draw(canvas);
+        }
+    }
 
-    private void doDraw(Canvas canvas) {
+    private void drawProgress(Canvas canvas) {
+        if (mProgressDrawable == null) {
+            int offset = (getWidth() - getHeight()) / 2;
+            mProgressDrawable = new CircularProgressDrawable(getHeight(), mStrokeWidth, mColorIndicator);
+            mProgressDrawable.setBounds(offset, 0, offset, 0);
+        }
         float sweepAngle = (360f / mMaxProgress) * mProgress;
-
-        int offset = (getWidth() - getHeight()) / 2;
-
-        if(mPath == null) {
-            mPath = new Path();
-        }
-        mPath.reset();
-        mPath.addArc(getRect(), -90, sweepAngle);
-        mPath.offset(offset, 0);
-        canvas.drawPath(mPath, createPaint());
+        mProgressDrawable.setSweepAngle(sweepAngle);
+        mProgressDrawable.draw(canvas);
     }
 
-    private RectF getRect() {
-        if (mRectF == null) {
-            int index = mStrokeWidth / 2;
-            mRectF = new RectF(index, index, getHeight() - index, getHeight() - index);
-        }
-        return mRectF;
+    public boolean isIndeterminateProgressMode() {
+        return mIndeterminateProgressMode;
     }
 
-    private Paint createPaint() {
-        if (mPaint == null) {
+    public void setIndeterminateProgressMode(boolean indeterminateProgressMode) {
+        this.mIndeterminateProgressMode = indeterminateProgressMode;
+    }
 
-            mPaint = new Paint();
-            mPaint.setAntiAlias(true);
-            mPaint.setStyle(Paint.Style.STROKE);
-            mPaint.setStrokeWidth(mStrokeWidth);
-            mPaint.setColor(mColorIndicator);
-        }
-
-        return mPaint;
+    @Override
+    protected boolean verifyDrawable(Drawable who) {
+        return who == mAnimatedDrawable || super.verifyDrawable(who);
     }
 
     private void morphToProgress() {
