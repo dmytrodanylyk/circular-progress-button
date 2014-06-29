@@ -1,3 +1,8 @@
+## 1.0.3
+
+* Implemented indeterminate progress
+* Fixed performance issue
+
 ## 1.0.2
 
 * Fixed issue when `wrap_content` width was breaking morphing animation
