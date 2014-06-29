@@ -17,7 +17,7 @@ public class CircularProgressButton extends Button {
     public static final int IDLE_STATE_PROGRESS = 0;
     public static final int ERROR_STATE_PROGRESS = -1;
 
-    private GradientDrawable background;
+    private StrokeGradientDrawable background;
     private CircularAnimatedDrawable mAnimatedDrawable;
     private CircularProgressDrawable mProgressDrawable;
 
@@ -72,11 +72,14 @@ public class CircularProgressButton extends Button {
 
         setText(mIdleText);
 
-        background = (GradientDrawable) context.getResources().getDrawable(R.drawable.background).mutate();
-        background.setColor(mColorIdle);
-        background.setStroke(mStrokeWidth, mColorIdle);
-        background.setCornerRadius(mCornerRadius);
-        setBackgroundCompat(background);
+        GradientDrawable gradientDrawable =
+                (GradientDrawable) context.getResources().getDrawable(R.drawable.background).mutate();
+        gradientDrawable.setColor(mColorIdle);
+        gradientDrawable.setCornerRadius(mCornerRadius);
+        background = new StrokeGradientDrawable(gradientDrawable);
+        background.setStrokeColor(mColorIdle);
+        background.setStrokeWidth(mStrokeWidth);
+        setBackgroundCompat(gradientDrawable);
     }
 
     private void initAttributes(Context context, AttributeSet attributeSet) {
@@ -265,8 +268,8 @@ public class CircularProgressButton extends Button {
     }
 
     private void morphToToIdle() {
-        background.setStroke(mStrokeWidth, mColorIdle);
-        background.setColor(mColorIdle);
+        background.getGradientDrawable().setStroke(mStrokeWidth, mColorIdle);
+        background.getGradientDrawable().setColor(mColorIdle);
 
         removeIcon();
         setText(mIdleText);

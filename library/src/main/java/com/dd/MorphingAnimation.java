@@ -1,9 +1,12 @@
 package com.dd;
 
-import android.animation.*;
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.graphics.drawable.GradientDrawable;
 import android.widget.TextView;
-import com.dd.circular.progress.button.R;
 
 class MorphingAnimation {
 
@@ -24,9 +27,9 @@ class MorphingAnimation {
     private float mToCornerRadius;
 
     private TextView mView;
-    private GradientDrawable mDrawable;
+    private StrokeGradientDrawable mDrawable;
 
-    public MorphingAnimation(TextView viewGroup, GradientDrawable drawable) {
+    public MorphingAnimation(TextView viewGroup, StrokeGradientDrawable drawable) {
         mView = viewGroup;
         mDrawable = drawable;
     }
@@ -69,6 +72,7 @@ class MorphingAnimation {
 
     public void start() {
         ValueAnimator widthAnimation = ValueAnimator.ofInt(mFromWidth, mToWidth);
+        final GradientDrawable gradientDrawable = mDrawable.getGradientDrawable();
         widthAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -84,26 +88,19 @@ class MorphingAnimation {
                     rightOffset = mToWidth - leftOffset;
                 }
 
-                mDrawable.setBounds(leftOffset, 0, rightOffset, mView.getHeight());
+                gradientDrawable.setBounds(leftOffset, 0, rightOffset, mView.getHeight());
             }
         });
 
-        ObjectAnimator bgColorAnimation = ObjectAnimator.ofInt(mDrawable, "color", mFromColor, mToColor);
+        ObjectAnimator bgColorAnimation = ObjectAnimator.ofInt(gradientDrawable, "color", mFromColor, mToColor);
         bgColorAnimation.setEvaluator(new ArgbEvaluator());
 
-
-        final int strokeWidth = (int) mView.getContext().getResources().getDimension(R.dimen.stroke_width);
-        ValueAnimator strokeColorAnimation =
-                ValueAnimator.ofObject(new ArgbEvaluator(), mFromStrokeColor, mToStrokeColor);
+        ObjectAnimator strokeColorAnimation =
+                ObjectAnimator.ofInt(mDrawable, "strokeColor", mFromStrokeColor, mToStrokeColor);
         strokeColorAnimation.setEvaluator(new ArgbEvaluator());
-        strokeColorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(final ValueAnimator animator) {
-                mDrawable.setStroke(strokeWidth, (Integer) animator.getAnimatedValue());
-            }
-        });
 
-        ObjectAnimator cornerAnimation = ObjectAnimator.ofFloat(mDrawable, "cornerRadius", mFromCornerRadius, mToCornerRadius);
+        ObjectAnimator cornerAnimation =
+                ObjectAnimator.ofFloat(gradientDrawable, "cornerRadius", mFromCornerRadius, mToCornerRadius);
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setDuration(ANIMATION_DURATION);

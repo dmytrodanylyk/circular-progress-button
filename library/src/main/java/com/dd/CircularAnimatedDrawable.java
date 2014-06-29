@@ -16,7 +16,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
-public class CircularAnimatedDrawable extends Drawable implements Animatable {
+class CircularAnimatedDrawable extends Drawable implements Animatable {
 
     private static final Interpolator ANGLE_INTERPOLATOR = new LinearInterpolator();
     private static final Interpolator SWEEP_INTERPOLATOR = new DecelerateInterpolator();

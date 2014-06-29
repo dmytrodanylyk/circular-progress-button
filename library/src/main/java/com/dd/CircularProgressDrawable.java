@@ -8,7 +8,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 
-public class CircularProgressDrawable extends Drawable {
+class CircularProgressDrawable extends Drawable {
 
     private float mSweepAngle;
     private float mStartAngle;
