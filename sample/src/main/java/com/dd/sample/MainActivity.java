@@ -68,6 +68,33 @@ public class MainActivity extends Activity {
                 }
             }
         });
+
+        final CircularProgressButton btnWithPadding1 = (CircularProgressButton) findViewById(R.id.btnWithPadding1);
+        btnWithPadding1.setIndeterminateProgressMode(true);
+        btnWithPadding1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (btnWithPadding1.getProgress() == 0) {
+                    btnWithPadding1.setProgress(50);
+                } else if (btnWithPadding1.getProgress() == 100) {
+                    btnWithPadding1.setProgress(0);
+                } else {
+                    btnWithPadding1.setProgress(100);
+                }
+            }
+        });
+
+        final CircularProgressButton btnWithPadding2= (CircularProgressButton) findViewById(R.id.btnWithPadding2);
+        btnWithPadding2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (btnWithPadding2.getProgress() == 0) {
+                    simulateSuccessProgress(btnWithPadding2);
+                } else {
+                    btnWithPadding2.setProgress(0);
+                }
+            }
+        });
     }
 
     private void simulateSuccessProgress(final CircularProgressButton button) {
