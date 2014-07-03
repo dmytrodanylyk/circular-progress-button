@@ -26,7 +26,9 @@ class MorphingAnimation {
     private float mFromCornerRadius;
     private float mToCornerRadius;
 
-    private TextView mView;
+    private float mPadding;
+
+    private TextView               mView;
     private StrokeGradientDrawable mDrawable;
 
     public MorphingAnimation(TextView viewGroup, StrokeGradientDrawable drawable) {
@@ -70,6 +72,10 @@ class MorphingAnimation {
         mToCornerRadius = toCornerRadius;
     }
 
+    public void setPadding(int padding) {
+        mPadding = padding;
+    }
+
     public void start() {
         ValueAnimator widthAnimation = ValueAnimator.ofInt(mFromWidth, mToWidth);
         final GradientDrawable gradientDrawable = mDrawable.getGradientDrawable();
@@ -79,16 +85,19 @@ class MorphingAnimation {
                 Integer value = (Integer) animation.getAnimatedValue();
                 int leftOffset;
                 int rightOffset;
+                int padding;
 
-                if(mFromWidth > mToWidth) {
+                if (mFromWidth > mToWidth) {
                     leftOffset = (mFromWidth - value) / 2;
                     rightOffset = mFromWidth - leftOffset;
+                    padding = (int) (mPadding * animation.getAnimatedFraction());
                 } else {
                     leftOffset = (mToWidth - value) / 2;
                     rightOffset = mToWidth - leftOffset;
+                    padding = (int) (mPadding - mPadding * animation.getAnimatedFraction());
                 }
 
-                gradientDrawable.setBounds(leftOffset, 0, rightOffset, mView.getHeight());
+                gradientDrawable.setBounds(leftOffset + padding, padding, rightOffset - padding, mView.getHeight() - padding);
             }
         });
 

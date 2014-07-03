@@ -13,6 +13,7 @@
         <attr name="iconError" format="reference"/>
         <attr name="iconComplete" format="reference"/>
         <attr name="cornerRadius" format="dimension"/>
+        <attr name="paddingProgress" format="dimension"/>
     </declare-styleable>
 
 </resources>
