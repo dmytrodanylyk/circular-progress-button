@@ -51,4 +51,26 @@
         app:textError="@string/Error"
         app:textIdle="@string/Upload" />
 
+    <com.dd.CircularProgressButton
+        android:id="@+id/btnWithText3"
+        android:layout_width="196dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:textComplete="@string/Complete"
+        app:textError="@string/Error"
+        app:textIdle="@string/Upload" />
+
+    <com.dd.CircularProgressButton
+        android:id="@+id/btnWithText4"
+        android:layout_width="196dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:textComplete="@string/Complete"
+        app:textError="@string/Error"
+        app:textIdle="@string/Upload" />
+
 </LinearLayout>

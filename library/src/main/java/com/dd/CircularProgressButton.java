@@ -128,7 +128,7 @@ public class CircularProgressButton extends Button {
         super.onDraw(canvas);
 
         if (mProgress > 0 && mState == State.PROGRESS && !mMorphingInProgress) {
-            if(mIndeterminateProgressMode) {
+            if (mIndeterminateProgressMode) {
                 drawIndeterminateProgress(canvas);
             } else {
                 drawProgress(canvas);
@@ -172,18 +172,36 @@ public class CircularProgressButton extends Button {
         return who == mAnimatedDrawable || super.verifyDrawable(who);
     }
 
-    private void morphToProgress() {
+    private MorphingAnimation prepareMorph() {
         mMorphingInProgress = true;
-
-        setWidth(getWidth());
-        setText(null);
 
         MorphingAnimation animation = new MorphingAnimation(this, background);
         animation.setFromCornerRadius(mCornerRadius);
-        animation.setToCornerRadius(getHeight());
+        animation.setToCornerRadius(mCornerRadius);
 
         animation.setFromWidth(getWidth());
-        animation.setToWidth(getHeight());
+        animation.setToWidth(getWidth());
+        return animation;
+    }
+
+    private MorphingAnimation prepareMorphWithProgress(float fromCorner, float toCorner, int fromWidth, int toWidth) {
+        mMorphingInProgress = true;
+
+        MorphingAnimation animation = new MorphingAnimation(this, background);
+        animation.setFromCornerRadius(fromCorner);
+        animation.setToCornerRadius(toCorner);
+
+        animation.setFromWidth(fromWidth);
+        animation.setToWidth(toWidth);
+        return animation;
+    }
+
+
+    private void morphToProgress() {
+        setWidth(getWidth());
+        setText(null);
+
+        MorphingAnimation animation = prepareMorphWithProgress(mCornerRadius, getHeight(), getWidth(), getHeight());
 
         animation.setFromColor(mColorIdle);
         animation.setToColor(mColorProgress);
@@ -202,15 +220,8 @@ public class CircularProgressButton extends Button {
         animation.start();
     }
 
-    private void morphToToComplete() {
-        mMorphingInProgress = true;
-
-        MorphingAnimation animation = new MorphingAnimation(this, background);
-        animation.setFromCornerRadius(getHeight());
-        animation.setToCornerRadius(mCornerRadius);
-
-        animation.setFromWidth(getHeight());
-        animation.setToWidth(getWidth());
+    private void morphProgressToComplete() {
+        MorphingAnimation animation = prepareMorphWithProgress(getHeight(), mCornerRadius, getHeight(), getWidth());
 
         animation.setFromColor(mColorProgress);
         animation.setToColor(mColorComplete);
@@ -235,15 +246,106 @@ public class CircularProgressButton extends Button {
 
     }
 
-    private void morphToToError() {
-        mMorphingInProgress = true;
+    private void morphIdleToComplete() {
+        MorphingAnimation animation = prepareMorph();
 
-        MorphingAnimation animation = new MorphingAnimation(this, background);
-        animation.setFromCornerRadius(getHeight());
-        animation.setToCornerRadius(mCornerRadius);
+        animation.setFromColor(mColorIdle);
+        animation.setToColor(mColorComplete);
 
-        animation.setFromWidth(getHeight());
-        animation.setToWidth(getWidth());
+        animation.setFromStrokeColor(mColorIdle);
+        animation.setToStrokeColor(mColorComplete);
+
+        animation.setListener(new OnAnimationEndListener() {
+            @Override
+            public void onAnimationEnd() {
+                if (mIconComplete != 0) {
+                    setIcon(mIconComplete);
+                } else {
+                    setText(mCompleteText);
+                }
+                mMorphingInProgress = false;
+                mState = State.COMPLETE;
+            }
+        });
+
+        animation.start();
+
+    }
+
+    private void morphCompleteToIdle() {
+        MorphingAnimation animation = prepareMorph();
+
+        animation.setFromColor(mColorComplete);
+        animation.setToColor(mColorIdle);
+
+        animation.setFromStrokeColor(mColorComplete);
+        animation.setToStrokeColor(mColorIdle);
+
+        animation.setListener(new OnAnimationEndListener() {
+            @Override
+            public void onAnimationEnd() {
+                removeIcon();
+                setText(mIdleText);
+                mMorphingInProgress = false;
+                mState = State.IDLE;
+            }
+        });
+
+        animation.start();
+
+    }
+
+    private void morphErrorToIdle() {
+        MorphingAnimation animation = prepareMorph();
+
+        animation.setFromColor(mColorError);
+        animation.setToColor(mColorIdle);
+
+        animation.setFromStrokeColor(mColorError);
+        animation.setToStrokeColor(mColorIdle);
+
+        animation.setListener(new OnAnimationEndListener() {
+            @Override
+            public void onAnimationEnd() {
+                removeIcon();
+                setText(mIdleText);
+                mMorphingInProgress = false;
+                mState = State.IDLE;
+            }
+        });
+
+        animation.start();
+
+    }
+
+    private void morphIdleToError() {
+        MorphingAnimation animation = prepareMorph();
+
+        animation.setFromColor(mColorIdle);
+        animation.setToColor(mColorError);
+
+        animation.setFromStrokeColor(mColorIdle);
+        animation.setToStrokeColor(mColorError);
+
+        animation.setListener(new OnAnimationEndListener() {
+            @Override
+            public void onAnimationEnd() {
+                if (mIconError != 0) {
+                    setIcon(mIconError);
+                } else {
+                    setText(mErrorText);
+                }
+                mMorphingInProgress = false;
+                mState = State.ERROR;
+            }
+        });
+
+        animation.start();
+
+    }
+
+    private void morphProgressToError() {
+        MorphingAnimation animation = prepareMorphWithProgress(getHeight(), mCornerRadius, getHeight(), getWidth());
 
         animation.setFromColor(mColorProgress);
         animation.setToColor(mColorError);
@@ -266,6 +368,8 @@ public class CircularProgressButton extends Button {
 
         animation.start();
     }
+
+
 
     private void morphToToIdle() {
         background.getGradientDrawable().setStroke(mStrokeWidth, mColorIdle);
@@ -310,7 +414,9 @@ public class CircularProgressButton extends Button {
         if (!mMorphingInProgress) {
             if (mProgress >= mMaxProgress) {
                 if (mState == State.PROGRESS) {
-                    morphToToComplete();
+                    morphProgressToComplete();
+                } else if (mState == State.IDLE) {
+                    morphIdleToComplete();
                 }
             } else if (mProgress > IDLE_STATE_PROGRESS) {
                 if (mState == State.IDLE) {
@@ -320,10 +426,18 @@ public class CircularProgressButton extends Button {
                 }
             } else if (mProgress == ERROR_STATE_PROGRESS) {
                 if (mState == State.PROGRESS) {
-                    morphToToError();
+                    morphProgressToError();
+                } else if (mState == State.IDLE) {
+                    morphIdleToError();
                 }
             } else if (mProgress == IDLE_STATE_PROGRESS) {
-                morphToToIdle();
+                if(mState == State.COMPLETE){
+                    morphCompleteToIdle();
+                } else if(mState == State.PROGRESS){
+                    morphToToIdle();
+                } else if(mState == State.ERROR){
+                    morphErrorToIdle();
+                }
             }
         }
     }
