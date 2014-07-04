@@ -30,6 +30,10 @@
                 android:name=".Sample3Activity"
                 android:theme="@android:style/Theme.Holo.Light"/>
 
+        <activity
+                android:name=".Sample4Activity"
+                android:theme="@android:style/Theme.Holo.Light"/>
+
     </application>
 
 </manifest>

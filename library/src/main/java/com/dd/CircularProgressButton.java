@@ -35,6 +35,7 @@ public class CircularProgressButton extends Button {
     private int mIconComplete;
     private int mIconError;
     private int mStrokeWidth;
+    private int mPaddingProgress;
     private float mCornerRadius;
     private boolean mIndeterminateProgressMode;
 
@@ -97,6 +98,7 @@ public class CircularProgressButton extends Button {
             mIconComplete = attr.getResourceId(R.styleable.CircularProgressButton_iconComplete, 0);
             mIconError = attr.getResourceId(R.styleable.CircularProgressButton_iconError, 0);
             mCornerRadius = attr.getDimension(R.styleable.CircularProgressButton_cornerRadius, 0);
+            mPaddingProgress = attr.getDimensionPixelSize(R.styleable.CircularProgressButton_paddingProgress, 0);
 
             int blue = getColor(R.color.blue);
             int red = getColor(R.color.red);
@@ -109,8 +111,8 @@ public class CircularProgressButton extends Button {
             mColorComplete = attr.getColor(R.styleable.CircularProgressButton_colorComplete, green);
             mColorProgress = attr.getColor(R.styleable.CircularProgressButton_colorProgress, white);
             mColorIndicator = attr.getColor(R.styleable.CircularProgressButton_colorIndicator, blue);
-            mColorIndicatorBackground = attr
-                    .getColor(R.styleable.CircularProgressButton_colorIndicatorBackground, grey);
+            mColorIndicatorBackground =
+                    attr.getColor(R.styleable.CircularProgressButton_colorIndicatorBackground, grey);
         } finally {
             attr.recycle();
         }
@@ -141,7 +143,7 @@ public class CircularProgressButton extends Button {
         if (mAnimatedDrawable == null) {
             int offset = (getWidth() - getHeight()) / 2;
             mAnimatedDrawable = new CircularAnimatedDrawable(mColorIndicator, mStrokeWidth);
-            mAnimatedDrawable.setBounds(offset, 0, getWidth() - offset, getHeight());
+            mAnimatedDrawable.setBounds(offset + mPaddingProgress, mPaddingProgress, getWidth() - offset - mPaddingProgress, getHeight() - mPaddingProgress);
             mAnimatedDrawable.setCallback(this);
             mAnimatedDrawable.start();
         } else {
@@ -152,8 +154,8 @@ public class CircularProgressButton extends Button {
     private void drawProgress(Canvas canvas) {
         if (mProgressDrawable == null) {
             int offset = (getWidth() - getHeight()) / 2;
-            mProgressDrawable = new CircularProgressDrawable(getHeight(), mStrokeWidth, mColorIndicator);
-            mProgressDrawable.setBounds(offset, 0, offset, 0);
+            mProgressDrawable = new CircularProgressDrawable(getHeight() - mPaddingProgress * 2, mStrokeWidth, mColorIndicator);
+            mProgressDrawable.setBounds(offset + mPaddingProgress, mPaddingProgress, offset + mPaddingProgress, mPaddingProgress);
         }
         float sweepAngle = (360f / mMaxProgress) * mProgress;
         mProgressDrawable.setSweepAngle(sweepAngle);
@@ -192,11 +194,12 @@ public class CircularProgressButton extends Button {
         animation.setFromCornerRadius(fromCorner);
         animation.setToCornerRadius(toCorner);
 
+        animation.setPadding(mPaddingProgress);
+
         animation.setFromWidth(fromWidth);
         animation.setToWidth(toWidth);
         return animation;
     }
-
 
     private void morphToProgress() {
         setWidth(getWidth());
