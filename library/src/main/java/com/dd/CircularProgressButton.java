@@ -91,14 +91,14 @@ public class CircularProgressButton extends Button {
         }
 
         try {
-            mIdleText = attr.getString(R.styleable.CircularProgressButton_textIdle);
-            mCompleteText = attr.getString(R.styleable.CircularProgressButton_textComplete);
-            mErrorText = attr.getString(R.styleable.CircularProgressButton_textError);
+            mIdleText = attr.getString(R.styleable.CircularProgressButton_cpb_textIdle);
+            mCompleteText = attr.getString(R.styleable.CircularProgressButton_cpb_textComplete);
+            mErrorText = attr.getString(R.styleable.CircularProgressButton_cpb_textError);
 
-            mIconComplete = attr.getResourceId(R.styleable.CircularProgressButton_iconComplete, 0);
-            mIconError = attr.getResourceId(R.styleable.CircularProgressButton_iconError, 0);
-            mCornerRadius = attr.getDimension(R.styleable.CircularProgressButton_cornerRadius, 0);
-            mPaddingProgress = attr.getDimensionPixelSize(R.styleable.CircularProgressButton_paddingProgress, 0);
+            mIconComplete = attr.getResourceId(R.styleable.CircularProgressButton_cpb_iconComplete, 0);
+            mIconError = attr.getResourceId(R.styleable.CircularProgressButton_cpb_iconError, 0);
+            mCornerRadius = attr.getDimension(R.styleable.CircularProgressButton_cpb_cornerRadius, 0);
+            mPaddingProgress = attr.getDimensionPixelSize(R.styleable.CircularProgressButton_cpb_paddingProgress, 0);
 
             int blue = getColor(R.color.blue);
             int red = getColor(R.color.red);
@@ -106,13 +106,13 @@ public class CircularProgressButton extends Button {
             int white = getColor(R.color.white);
             int grey = getColor(R.color.grey);
 
-            mColorIdle = attr.getColor(R.styleable.CircularProgressButton_colorIdle, blue);
-            mColorError = attr.getColor(R.styleable.CircularProgressButton_colorError, red);
-            mColorComplete = attr.getColor(R.styleable.CircularProgressButton_colorComplete, green);
-            mColorProgress = attr.getColor(R.styleable.CircularProgressButton_colorProgress, white);
-            mColorIndicator = attr.getColor(R.styleable.CircularProgressButton_colorIndicator, blue);
+            mColorIdle = attr.getColor(R.styleable.CircularProgressButton_cpb_colorIdle, blue);
+            mColorError = attr.getColor(R.styleable.CircularProgressButton_cpb_colorError, red);
+            mColorComplete = attr.getColor(R.styleable.CircularProgressButton_cpb_colorComplete, green);
+            mColorProgress = attr.getColor(R.styleable.CircularProgressButton_cpb_colorProgress, white);
+            mColorIndicator = attr.getColor(R.styleable.CircularProgressButton_cpb_colorIndicator, blue);
             mColorIndicatorBackground =
-                    attr.getColor(R.styleable.CircularProgressButton_colorIndicatorBackground, grey);
+                    attr.getColor(R.styleable.CircularProgressButton_cpb_colorIndicatorBackground, grey);
         } finally {
             attr.recycle();
         }
@@ -143,7 +143,11 @@ public class CircularProgressButton extends Button {
         if (mAnimatedDrawable == null) {
             int offset = (getWidth() - getHeight()) / 2;
             mAnimatedDrawable = new CircularAnimatedDrawable(mColorIndicator, mStrokeWidth);
-            mAnimatedDrawable.setBounds(offset + mPaddingProgress, mPaddingProgress, getWidth() - offset - mPaddingProgress, getHeight() - mPaddingProgress);
+            int left = offset + mPaddingProgress;
+            int right = getWidth() - offset - mPaddingProgress;
+            int bottom = getHeight() - mPaddingProgress;
+            int top = mPaddingProgress;
+            mAnimatedDrawable.setBounds(left, top, right, bottom);
             mAnimatedDrawable.setCallback(this);
             mAnimatedDrawable.start();
         } else {
@@ -154,8 +158,10 @@ public class CircularProgressButton extends Button {
     private void drawProgress(Canvas canvas) {
         if (mProgressDrawable == null) {
             int offset = (getWidth() - getHeight()) / 2;
-            mProgressDrawable = new CircularProgressDrawable(getHeight() - mPaddingProgress * 2, mStrokeWidth, mColorIndicator);
-            mProgressDrawable.setBounds(offset + mPaddingProgress, mPaddingProgress, offset + mPaddingProgress, mPaddingProgress);
+            int size = getHeight() - mPaddingProgress * 2;
+            mProgressDrawable = new CircularProgressDrawable(size, mStrokeWidth, mColorIndicator);
+            int left = offset + mPaddingProgress;
+            mProgressDrawable.setBounds(left, mPaddingProgress, left, mPaddingProgress);
         }
         float sweepAngle = (360f / mMaxProgress) * mProgress;
         mProgressDrawable.setSweepAngle(sweepAngle);

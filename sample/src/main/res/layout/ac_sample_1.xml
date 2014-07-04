@@ -12,10 +12,10 @@
         android:layout_height="64dp"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:cornerRadius="48dp"
-        app:iconComplete="@drawable/ic_action_accept"
-        app:iconError="@drawable/ic_action_cancel"
-        app:textIdle="@string/Upload" />
+        app:cpb_cornerRadius="48dp"
+        app:cpb_iconComplete="@drawable/ic_action_accept"
+        app:cpb_iconError="@drawable/ic_action_cancel"
+        app:cpb_textIdle="@string/Upload" />
 
     <com.dd.CircularProgressButton
         android:id="@+id/circularButton2"
@@ -24,9 +24,9 @@
         android:layout_marginTop="16dp"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:cornerRadius="48dp"
-        app:iconComplete="@drawable/ic_action_accept"
-        app:iconError="@drawable/ic_action_cancel"
-        app:textIdle="@string/Upload" />
+        app:cpb_cornerRadius="48dp"
+        app:cpb_iconComplete="@drawable/ic_action_accept"
+        app:cpb_iconError="@drawable/ic_action_cancel"
+        app:cpb_textIdle="@string/Upload" />
 
 </LinearLayout>
