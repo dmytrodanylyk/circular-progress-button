@@ -1,103 +1,38 @@
 package com.dd.sample;
 
-import com.dd.CircularProgressButton;
-
-import android.animation.ValueAnimator;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ac_main);
 
-        final CircularProgressButton btnWithIcons1 = (CircularProgressButton) findViewById(R.id.btnWithIcons1);
-        btnWithIcons1.setIndeterminateProgressMode(true);
-        btnWithIcons1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (btnWithIcons1.getProgress() == 0) {
-                    btnWithIcons1.setProgress(50);
-                } else if (btnWithIcons1.getProgress() == 100) {
-                    btnWithIcons1.setProgress(0);
-                } else {
-                    btnWithIcons1.setProgress(100);
-                }
-            }
-        });
+        String[] items = getResources().getStringArray(R.array.sample_list);
 
-        final CircularProgressButton btnWithIcons2 = (CircularProgressButton) findViewById(R.id.btnWithIcons2);
-        btnWithIcons2.setIndeterminateProgressMode(true);
-        btnWithIcons2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (btnWithIcons2.getProgress() == 0) {
-                    btnWithIcons2.setProgress(50);
-                } else if (btnWithIcons2.getProgress() == -1) {
-                    btnWithIcons2.setProgress(0);
-                } else {
-                    btnWithIcons2.setProgress(-1);
-                }
-            }
-        });
-
-        final CircularProgressButton btnWithText1 = (CircularProgressButton) findViewById(R.id.btnWithText1);
-        btnWithText1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (btnWithText1.getProgress() == 0) {
-                    simulateSuccessProgress(btnWithText1);
-                } else {
-                    btnWithText1.setProgress(0);
-                }
-            }
-        });
-
-        final CircularProgressButton btnWithText2= (CircularProgressButton) findViewById(R.id.btnWithText2);
-        btnWithText2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (btnWithText2.getProgress() == 0) {
-                    simulateErrorProgress(btnWithText2);
-                } else {
-                    btnWithText2.setProgress(0);
-                }
-            }
-        });
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+        setListAdapter(adapter);
     }
 
-    private void simulateSuccessProgress(final CircularProgressButton button) {
-        ValueAnimator widthAnimation = ValueAnimator.ofInt(1, 100);
-        widthAnimation.setDuration(1500);
-        widthAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        widthAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                Integer value = (Integer) animation.getAnimatedValue();
-                button.setProgress(value);
-            }
-        });
-        widthAnimation.start();
-    }
-
-    private void simulateErrorProgress(final CircularProgressButton button) {
-        ValueAnimator widthAnimation = ValueAnimator.ofInt(1, 99);
-        widthAnimation.setDuration(1500);
-        widthAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        widthAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                Integer value = (Integer) animation.getAnimatedValue();
-                button.setProgress(value);
-                if (value == 99) {
-                    button.setProgress(-1);
-                }
-            }
-        });
-        widthAnimation.start();
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        switch (position) {
+            case 0:
+                Sample1Activity.startThisActivity(this);
+                break;
+            case 1:
+                Sample2Activity.startThisActivity(this);
+                break;
+            case 2:
+                Sample3Activity.startThisActivity(this);
+                break;
+            case 3:
+                Sample4Activity.startThisActivity(this);
+                break;
+        }
     }
 }
