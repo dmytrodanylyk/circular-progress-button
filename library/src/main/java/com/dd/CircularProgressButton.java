@@ -266,6 +266,7 @@ public class CircularProgressButton extends Button {
         @Override
         public void onAnimationEnd() {
             if (mIconComplete != 0) {
+                setText(null);
                 setIcon(mIconComplete);
             } else {
                 setText(mCompleteText);
@@ -347,6 +348,7 @@ public class CircularProgressButton extends Button {
         @Override
         public void onAnimationEnd() {
             if (mIconComplete != 0) {
+                setText(null);
                 setIcon(mIconError);
             } else {
                 setText(mErrorText);
@@ -396,7 +398,7 @@ public class CircularProgressButton extends Button {
     public void setProgress(int progress) {
         mProgress = progress;
 
-        if (mMorphingInProgress) {
+        if (mMorphingInProgress || getWidth() == 0) {
             return;
         }
 
@@ -431,5 +433,13 @@ public class CircularProgressButton extends Button {
 
     public int getProgress() {
         return mProgress;
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        if(changed) {
+            setProgress(mProgress);
+        }
     }
 }
