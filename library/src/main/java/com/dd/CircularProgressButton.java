@@ -26,6 +26,7 @@ public class CircularProgressButton extends Button {
     private String mCompleteText;
     private String mErrorText;
 
+    private int mColorDisabled;
     private int mColorIdle;
     private int mColorError;
     private int mColorProgress;
@@ -106,6 +107,7 @@ public class CircularProgressButton extends Button {
             int white = getColor(R.color.white);
             int grey = getColor(R.color.grey);
 
+            mColorDisabled = attr.getColor(R.styleable.CircularProgressButton_cpb_colorDisabled, grey);
             mColorIdle = attr.getColor(R.styleable.CircularProgressButton_cpb_colorIdle, blue);
             mColorError = attr.getColor(R.styleable.CircularProgressButton_cpb_colorError, red);
             mColorComplete = attr.getColor(R.styleable.CircularProgressButton_cpb_colorComplete, green);
@@ -452,6 +454,18 @@ public class CircularProgressButton extends Button {
 
     public void setStrokeColor(int color) {
         background.setStrokeColor(color);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        if (enabled) {
+            setStrokeColor(mColorIdle);
+            setBackgroundColor(mColorIdle);
+        } else {
+            setStrokeColor(mColorDisabled);
+            setBackgroundColor(mColorDisabled);
+        }
     }
 
     @Override
