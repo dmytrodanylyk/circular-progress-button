@@ -359,13 +359,24 @@ public class CircularProgressButton extends Button {
     };
 
     private void morphProgressToIdle() {
-        background.getGradientDrawable().setStroke(mStrokeWidth, mColorIdle);
-        background.getGradientDrawable().setColor(mColorIdle);
+        MorphingAnimation animation = createProgressMorphing(getHeight(), mCornerRadius, getHeight(), getWidth());
 
-        removeIcon();
-        setText(mIdleText);
-        mMorphingInProgress = false;
-        mState = State.IDLE;
+        animation.setFromColor(mColorProgress);
+        animation.setToColor(mColorIdle);
+
+        animation.setFromStrokeColor(mColorIndicator);
+        animation.setToStrokeColor(mColorIdle);
+        animation.setListener(new OnAnimationEndListener() {
+            @Override
+            public void onAnimationEnd() {
+                removeIcon();
+                setText(mIdleText);
+                mMorphingInProgress = false;
+                mState = State.IDLE;
+            }
+        });
+
+        animation.start();
     }
 
     private void setIcon(int icon) {
@@ -438,7 +449,7 @@ public class CircularProgressButton extends Button {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        if(changed) {
+        if (changed) {
             setProgress(mProgress);
         }
     }
