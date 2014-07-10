@@ -446,6 +446,14 @@ public class CircularProgressButton extends Button {
         return mProgress;
     }
 
+    public void setBackgroundColor(int color) {
+        background.getGradientDrawable().setColor(color);
+    }
+
+    public void setStrokeColor(int color) {
+        background.setStrokeColor(color);
+    }
+
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
