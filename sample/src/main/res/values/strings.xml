@@ -15,6 +15,16 @@
         <item>Integer Progress Sample</item>
         <item>State Change Sample</item>
         <item>Progress Padding Sample</item>
+        <item>Test Config Changes</item>
     </array>
 
+    <string name="task_progress_msg">Progress:</string>
+    <string name="start">Start</string>
+    <string name="cancel">Cancel</string>
+    <string name="task_started_msg">Task started!</string>
+    <string name="task_cancelled_msg">Task cancelled!</string>
+    <string name="task_complete_msg">Task complete!</string>
+    <string name="zero_percent">0%</string>
+    <string name="one_hundred_percent">100%</string>
+    <string name="menu_trigger_config_change">Trigger Config Change</string>
 </resources>
