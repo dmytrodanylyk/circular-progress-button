@@ -9,7 +9,10 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.Button;
 
 public class CircularProgressButton extends Button {
@@ -485,8 +488,79 @@ public class CircularProgressButton extends Button {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        if (changed) {
+        if (changed && mState == State.PROGRESS) {
             setProgress(mProgress);
+        } else {
+            switch (mState) {
+                case COMPLETE:
+                    setBackgroundColor(mColorComplete);
+                    setStrokeColor(mColorComplete);
+                    if (mIconComplete != 0) {
+                        setText(null);
+                        setIcon(mIconComplete);
+                    } else {
+                        setText(mCompleteText);
+                    }
+                    break;
+                case ERROR:
+                    setBackgroundColor(mColorError);
+                    setStrokeColor(mColorError);
+                    if (mIconError != 0) {
+                        setText(null);
+                        setIcon(mIconError);
+                    } else {
+                        setText(mErrorText);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
+    }
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        SavedState ss = new SavedState(superState);
+        ss.state = mState.ordinal();
+        return ss;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        SavedState ss = (SavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+        if(State.values()[ss.state] != State.PROGRESS)
+            mState = State.values()[ss.state];
+    }
+
+    static class SavedState extends BaseSavedState {
+        int state;
+
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            state = in.readInt();
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeInt(state);
+        }
+
+        public static final Parcelable.Creator<SavedState> CREATOR
+                = new Parcelable.Creator<SavedState>() {
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
     }
 }
