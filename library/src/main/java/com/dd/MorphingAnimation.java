@@ -10,9 +10,12 @@ import android.widget.TextView;
 
 class MorphingAnimation {
 
-    private static final int ANIMATION_DURATION = 400;
+    public static final int DURATION_NORMAL = 400;
+    public static final int DURATION_INSTANT = 1;
 
     private OnAnimationEndListener mListener;
+
+    private int mDuration;
 
     private int mFromWidth;
     private int mToWidth;
@@ -34,6 +37,10 @@ class MorphingAnimation {
     public MorphingAnimation(TextView viewGroup, StrokeGradientDrawable drawable) {
         mView = viewGroup;
         mDrawable = drawable;
+    }
+
+    public void setDuration(int duration) {
+        mDuration = duration;
     }
 
     public void setListener(OnAnimationEndListener listener) {
@@ -113,7 +120,7 @@ class MorphingAnimation {
                 ObjectAnimator.ofFloat(gradientDrawable, "cornerRadius", mFromCornerRadius, mToCornerRadius);
 
         AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.setDuration(ANIMATION_DURATION);
+        animatorSet.setDuration(mDuration);
         animatorSet.playTogether(widthAnimation, bgColorAnimation, strokeColorAnimation, cornerAnimation);
         animatorSet.addListener(new Animator.AnimatorListener() {
             @Override

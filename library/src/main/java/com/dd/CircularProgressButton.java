@@ -9,6 +9,8 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.widget.Button;
 
@@ -21,11 +23,13 @@ public class CircularProgressButton extends Button {
     private CircularAnimatedDrawable mAnimatedDrawable;
     private CircularProgressDrawable mProgressDrawable;
 
+    private StateManager mStateManager;
     private State mState;
     private String mIdleText;
     private String mCompleteText;
     private String mErrorText;
 
+    private int mColorDisabled;
     private int mColorIdle;
     private int mColorError;
     private int mColorProgress;
@@ -38,6 +42,7 @@ public class CircularProgressButton extends Button {
     private int mPaddingProgress;
     private float mCornerRadius;
     private boolean mIndeterminateProgressMode;
+    private boolean mConfigurationChanged;
 
     private enum State {
         PROGRESS, IDLE, COMPLETE, ERROR
@@ -70,6 +75,7 @@ public class CircularProgressButton extends Button {
 
         mMaxProgress = 100;
         mState = State.IDLE;
+        mStateManager = new StateManager(this);
 
         setText(mIdleText);
 
@@ -85,12 +91,12 @@ public class CircularProgressButton extends Button {
 
     private void initAttributes(Context context, AttributeSet attributeSet) {
         TypedArray attr = getTypedArray(context, attributeSet, R.styleable.CircularProgressButton);
-
         if (attr == null) {
             return;
         }
 
         try {
+
             mIdleText = attr.getString(R.styleable.CircularProgressButton_cpb_textIdle);
             mCompleteText = attr.getString(R.styleable.CircularProgressButton_cpb_textComplete);
             mErrorText = attr.getString(R.styleable.CircularProgressButton_cpb_textError);
@@ -106,6 +112,7 @@ public class CircularProgressButton extends Button {
             int white = getColor(R.color.white);
             int grey = getColor(R.color.grey);
 
+            mColorDisabled = attr.getColor(R.styleable.CircularProgressButton_cpb_colorDisabled, grey);
             mColorIdle = attr.getColor(R.styleable.CircularProgressButton_cpb_colorIdle, blue);
             mColorError = attr.getColor(R.styleable.CircularProgressButton_cpb_colorError, red);
             mColorComplete = attr.getColor(R.styleable.CircularProgressButton_cpb_colorComplete, green);
@@ -190,6 +197,15 @@ public class CircularProgressButton extends Button {
 
         animation.setFromWidth(getWidth());
         animation.setToWidth(getWidth());
+
+        if(mConfigurationChanged) {
+            animation.setDuration(MorphingAnimation.DURATION_INSTANT);
+        } else {
+            animation.setDuration(MorphingAnimation.DURATION_NORMAL);
+        }
+
+        mConfigurationChanged = false;
+
         return animation;
     }
 
@@ -204,6 +220,15 @@ public class CircularProgressButton extends Button {
 
         animation.setFromWidth(fromWidth);
         animation.setToWidth(toWidth);
+
+        if(mConfigurationChanged) {
+            animation.setDuration(MorphingAnimation.DURATION_INSTANT);
+        } else {
+            animation.setDuration(MorphingAnimation.DURATION_NORMAL);
+        }
+
+        mConfigurationChanged = false;
+
         return animation;
     }
 
@@ -229,6 +254,8 @@ public class CircularProgressButton extends Button {
         public void onAnimationEnd() {
             mMorphingInProgress = false;
             mState = State.PROGRESS;
+
+            mStateManager.checkState(CircularProgressButton.this);
         }
     };
 
@@ -266,12 +293,15 @@ public class CircularProgressButton extends Button {
         @Override
         public void onAnimationEnd() {
             if (mIconComplete != 0) {
+                setText(null);
                 setIcon(mIconComplete);
             } else {
                 setText(mCompleteText);
             }
             mMorphingInProgress = false;
             mState = State.COMPLETE;
+
+            mStateManager.checkState(CircularProgressButton.this);
         }
     };
 
@@ -312,6 +342,8 @@ public class CircularProgressButton extends Button {
             setText(mIdleText);
             mMorphingInProgress = false;
             mState = State.IDLE;
+
+            mStateManager.checkState(CircularProgressButton.this);
         }
     };
 
@@ -347,23 +379,39 @@ public class CircularProgressButton extends Button {
         @Override
         public void onAnimationEnd() {
             if (mIconComplete != 0) {
+                setText(null);
                 setIcon(mIconError);
             } else {
                 setText(mErrorText);
             }
             mMorphingInProgress = false;
             mState = State.ERROR;
+
+            mStateManager.checkState(CircularProgressButton.this);
         }
     };
 
     private void morphProgressToIdle() {
-        background.getGradientDrawable().setStroke(mStrokeWidth, mColorIdle);
-        background.getGradientDrawable().setColor(mColorIdle);
+        MorphingAnimation animation = createProgressMorphing(getHeight(), mCornerRadius, getHeight(), getWidth());
 
-        removeIcon();
-        setText(mIdleText);
-        mMorphingInProgress = false;
-        mState = State.IDLE;
+        animation.setFromColor(mColorProgress);
+        animation.setToColor(mColorIdle);
+
+        animation.setFromStrokeColor(mColorIndicator);
+        animation.setToStrokeColor(mColorIdle);
+        animation.setListener(new OnAnimationEndListener() {
+            @Override
+            public void onAnimationEnd() {
+                removeIcon();
+                setText(mIdleText);
+                mMorphingInProgress = false;
+                mState = State.IDLE;
+
+                mStateManager.checkState(CircularProgressButton.this);
+            }
+        });
+
+        animation.start();
     }
 
     private void setIcon(int icon) {
@@ -396,9 +444,11 @@ public class CircularProgressButton extends Button {
     public void setProgress(int progress) {
         mProgress = progress;
 
-        if (mMorphingInProgress) {
+        if (mMorphingInProgress || getWidth() == 0) {
             return;
         }
+
+        mStateManager.saveProgress(this);
 
         if (mProgress >= mMaxProgress) {
             if (mState == State.PROGRESS) {
@@ -431,5 +481,98 @@ public class CircularProgressButton extends Button {
 
     public int getProgress() {
         return mProgress;
+    }
+
+    public void setBackgroundColor(int color) {
+        background.getGradientDrawable().setColor(color);
+    }
+
+    public void setStrokeColor(int color) {
+        background.setStrokeColor(color);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        if (enabled) {
+            setStrokeColor(mColorIdle);
+            setBackgroundColor(mColorIdle);
+        } else {
+            setStrokeColor(mColorDisabled);
+            setBackgroundColor(mColorDisabled);
+        }
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        if (changed) {
+            setProgress(mProgress);
+        }
+    }
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        SavedState savedState = new SavedState(superState);
+        savedState.mProgress = mProgress;
+        savedState.mIndeterminateProgressMode = mIndeterminateProgressMode;
+        savedState.mConfigurationChanged = true;
+
+        return savedState;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        if (state instanceof SavedState) {
+            SavedState savedState = (SavedState) state;
+            mProgress = savedState.mProgress;
+            mIndeterminateProgressMode = savedState.mIndeterminateProgressMode;
+            mConfigurationChanged = savedState.mConfigurationChanged;
+            super.onRestoreInstanceState(savedState.getSuperState());
+            setProgress(mProgress);
+        } else {
+            super.onRestoreInstanceState(state);
+        }
+    }
+
+
+    static class SavedState extends BaseSavedState {
+
+        private boolean mIndeterminateProgressMode;
+        private boolean mConfigurationChanged;
+        private int mProgress;
+
+        public SavedState(Parcelable parcel) {
+            super(parcel);
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            mProgress = in.readInt();
+            mIndeterminateProgressMode = in.readInt() == 1;
+            mConfigurationChanged = in.readInt() == 1;
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeInt(mProgress);
+            out.writeInt(mIndeterminateProgressMode ? 1 : 0);
+            out.writeInt(mConfigurationChanged ? 1 : 0);
+        }
+
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+
+            @Override
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
     }
 }
