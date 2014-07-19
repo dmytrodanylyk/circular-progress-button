@@ -9,6 +9,8 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.widget.Button;
 
@@ -40,6 +42,7 @@ public class CircularProgressButton extends Button {
     private int mPaddingProgress;
     private float mCornerRadius;
     private boolean mIndeterminateProgressMode;
+    private boolean mConfigurationChanged;
 
     private enum State {
         PROGRESS, IDLE, COMPLETE, ERROR
@@ -88,12 +91,12 @@ public class CircularProgressButton extends Button {
 
     private void initAttributes(Context context, AttributeSet attributeSet) {
         TypedArray attr = getTypedArray(context, attributeSet, R.styleable.CircularProgressButton);
-
         if (attr == null) {
             return;
         }
 
         try {
+
             mIdleText = attr.getString(R.styleable.CircularProgressButton_cpb_textIdle);
             mCompleteText = attr.getString(R.styleable.CircularProgressButton_cpb_textComplete);
             mErrorText = attr.getString(R.styleable.CircularProgressButton_cpb_textError);
@@ -194,6 +197,15 @@ public class CircularProgressButton extends Button {
 
         animation.setFromWidth(getWidth());
         animation.setToWidth(getWidth());
+
+        if(mConfigurationChanged) {
+            animation.setDuration(MorphingAnimation.DURATION_INSTANT);
+        } else {
+            animation.setDuration(MorphingAnimation.DURATION_NORMAL);
+        }
+
+        mConfigurationChanged = false;
+
         return animation;
     }
 
@@ -208,6 +220,15 @@ public class CircularProgressButton extends Button {
 
         animation.setFromWidth(fromWidth);
         animation.setToWidth(toWidth);
+
+        if(mConfigurationChanged) {
+            animation.setDuration(MorphingAnimation.DURATION_INSTANT);
+        } else {
+            animation.setDuration(MorphingAnimation.DURATION_NORMAL);
+        }
+
+        mConfigurationChanged = false;
+
         return animation;
     }
 
@@ -488,5 +509,70 @@ public class CircularProgressButton extends Button {
         if (changed) {
             setProgress(mProgress);
         }
+    }
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        SavedState savedState = new SavedState(superState);
+        savedState.mProgress = mProgress;
+        savedState.mIndeterminateProgressMode = mIndeterminateProgressMode;
+        savedState.mConfigurationChanged = true;
+
+        return savedState;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        if (state instanceof SavedState) {
+            SavedState savedState = (SavedState) state;
+            mProgress = savedState.mProgress;
+            mIndeterminateProgressMode = savedState.mIndeterminateProgressMode;
+            mConfigurationChanged = savedState.mConfigurationChanged;
+            super.onRestoreInstanceState(savedState.getSuperState());
+            setProgress(mProgress);
+        } else {
+            super.onRestoreInstanceState(state);
+        }
+    }
+
+
+    static class SavedState extends BaseSavedState {
+
+        private boolean mIndeterminateProgressMode;
+        private boolean mConfigurationChanged;
+        private int mProgress;
+
+        public SavedState(Parcelable parcel) {
+            super(parcel);
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            mProgress = in.readInt();
+            mIndeterminateProgressMode = in.readInt() == 1;
+            mConfigurationChanged = in.readInt() == 1;
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeInt(mProgress);
+            out.writeInt(mIndeterminateProgressMode ? 1 : 0);
+            out.writeInt(mConfigurationChanged ? 1 : 0);
+        }
+
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+
+            @Override
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
     }
 }
