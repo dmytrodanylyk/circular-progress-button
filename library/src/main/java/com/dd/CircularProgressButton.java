@@ -21,6 +21,7 @@ public class CircularProgressButton extends Button {
     private CircularAnimatedDrawable mAnimatedDrawable;
     private CircularProgressDrawable mProgressDrawable;
 
+    private StateManager mStateManager;
     private State mState;
     private String mIdleText;
     private String mCompleteText;
@@ -71,6 +72,7 @@ public class CircularProgressButton extends Button {
 
         mMaxProgress = 100;
         mState = State.IDLE;
+        mStateManager = new StateManager(this);
 
         setText(mIdleText);
 
@@ -231,6 +233,8 @@ public class CircularProgressButton extends Button {
         public void onAnimationEnd() {
             mMorphingInProgress = false;
             mState = State.PROGRESS;
+
+            mStateManager.checkState(CircularProgressButton.this);
         }
     };
 
@@ -275,6 +279,8 @@ public class CircularProgressButton extends Button {
             }
             mMorphingInProgress = false;
             mState = State.COMPLETE;
+
+            mStateManager.checkState(CircularProgressButton.this);
         }
     };
 
@@ -315,6 +321,8 @@ public class CircularProgressButton extends Button {
             setText(mIdleText);
             mMorphingInProgress = false;
             mState = State.IDLE;
+
+            mStateManager.checkState(CircularProgressButton.this);
         }
     };
 
@@ -357,6 +365,8 @@ public class CircularProgressButton extends Button {
             }
             mMorphingInProgress = false;
             mState = State.ERROR;
+
+            mStateManager.checkState(CircularProgressButton.this);
         }
     };
 
@@ -375,6 +385,8 @@ public class CircularProgressButton extends Button {
                 setText(mIdleText);
                 mMorphingInProgress = false;
                 mState = State.IDLE;
+
+                mStateManager.checkState(CircularProgressButton.this);
             }
         });
 
@@ -414,6 +426,8 @@ public class CircularProgressButton extends Button {
         if (mMorphingInProgress || getWidth() == 0) {
             return;
         }
+
+        mStateManager.saveProgress(this);
 
         if (mProgress >= mMaxProgress) {
             if (mState == State.PROGRESS) {
