@@ -33,6 +33,9 @@ public class MainActivity extends ListActivity {
             case 3:
                 Sample4Activity.startThisActivity(this);
                 break;
+            case 4:
+                Sample5Activity.startThisActivity(this);
+                break;
         }
     }
 }

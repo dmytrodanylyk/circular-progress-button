@@ -9,12 +9,14 @@
     <string name="IntegerProgressSample">Integer Progress Sample</string>
     <string name="StateChangeSample">State Change Sample</string>
     <string name="ProgressPaddingSample">Progress Padding Sample</string>
+    <string name="CustomSelectorSample">Custom Selector Sample</string>
 
     <array name="sample_list">
-        <item>Indeterminate Progress Sample</item>
-        <item>Integer Progress Sample</item>
-        <item>State Change Sample</item>
-        <item>Progress Padding Sample</item>
+        <item>@string/IndeterminateProgressSample</item>
+        <item>@string/IntegerProgressSample</item>
+        <item>@string/StateChangeSample</item>
+        <item>@string/ProgressPaddingSample</item>
+        <item>@string/CustomSelectorSample</item>
     </array>
 
 </resources>
