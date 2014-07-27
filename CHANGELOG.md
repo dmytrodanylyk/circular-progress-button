@@ -1,3 +1,11 @@
+## 1.1.0 (Major API Changes)
+* Implement selector for button background #4
+* Added Custom Selector Sample
+* Replaced `cpb_colorComplete` with `cpb_selectorComplete`
+* Replaced `cpb_colorError` with `cpb_selectorError`
+* Replaced `cpb_colorIdle` with `cpb_selectorIdle`
+* Removed `cpb_colorDisabled` (now you can use above selector)
+
 ## 1.0.5
 
 * Implemented #9 Maintain state when rotate screen.
@@ -7,7 +15,7 @@
 * Fixed issue #21 Progress changes are ignored when the animations are running.
 * Added `cpb_colorDisabled` attribute, to change color when you call `setEnabled(false)` method.
 
-## 1.0.4
+## 1.0.4 (Major API Changes)
 
 * Added support to some state changes with animation, eg. Idle to Complete or Idle to Error (Thanks to João Gouveia)
 * Implemented morph progress drawable  to different size #14 (Thanks to Balys Valentukevicius)

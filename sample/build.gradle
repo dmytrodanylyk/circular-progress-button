@@ -32,5 +32,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':library')
+    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.0'
+//    compile project(':library')
 }
