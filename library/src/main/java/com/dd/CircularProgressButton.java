@@ -56,7 +56,7 @@ public class CircularProgressButton extends Button {
     }
 
     private int mMaxProgress;
-    private int mProgress;
+    private float mProgress;
 
     private boolean mMorphingInProgress;
 
@@ -533,7 +533,7 @@ public class CircularProgressButton extends Button {
         }
     }
 
-    public void setProgress(int progress) {
+    public void setProgress(float progress) {
         mProgress = progress;
 
         if (mMorphingInProgress || getWidth() == 0) {
@@ -571,7 +571,7 @@ public class CircularProgressButton extends Button {
         }
     }
 
-    public int getProgress() {
+    public float getProgress() {
         return mProgress;
     }
 
@@ -621,7 +621,7 @@ public class CircularProgressButton extends Button {
 
         private boolean mIndeterminateProgressMode;
         private boolean mConfigurationChanged;
-        private int mProgress;
+        private float mProgress;
 
         public SavedState(Parcelable parcel) {
             super(parcel);
@@ -637,7 +637,7 @@ public class CircularProgressButton extends Button {
         @Override
         public void writeToParcel(Parcel out, int flags) {
             super.writeToParcel(out, flags);
-            out.writeInt(mProgress);
+            out.writeFloat(mProgress);
             out.writeInt(mIndeterminateProgressMode ? 1 : 0);
             out.writeInt(mConfigurationChanged ? 1 : 0);
         }
