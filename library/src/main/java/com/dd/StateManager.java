@@ -18,7 +18,7 @@ class StateManager {
         return mIsEnabled;
     }
 
-    public double getProgress() {
+    public float getProgress() {
         return mProgress;
     }
 
