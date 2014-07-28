@@ -14,6 +14,10 @@ class StateManager {
         mProgress = progressButton.getProgress();
     }
 
+    public void saveEnabled(Boolean isEnabled) {
+        mIsEnabled = isEnabled;
+    }
+
     public boolean isEnabled() {
         return mIsEnabled;
     }
@@ -26,7 +30,7 @@ class StateManager {
         if (progressButton.getProgress() != getProgress()) {
             progressButton.setProgress(progressButton.getProgress());
         } else if(progressButton.isEnabled() != isEnabled()) {
-            progressButton.setEnabled(progressButton.isEnabled());
+            progressButton.setEnabled(mIsEnabled);
         }
     }
 }
