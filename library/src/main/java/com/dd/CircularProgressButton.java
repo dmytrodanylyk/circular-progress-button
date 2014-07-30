@@ -11,6 +11,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.StateSet;
 import android.widget.Button;
@@ -44,6 +45,7 @@ public class CircularProgressButton extends Button {
     private int      mColorIndicatorBackground;
     private Drawable mIconComplete;
     private Drawable mIconError;
+    private Drawable mIconIdle;
     private int      mStrokeWidth;
     private int      mPaddingProgress;
     private float    mCornerRadius;
@@ -90,6 +92,10 @@ public class CircularProgressButton extends Button {
         mMaxProgress = 100;
         mState = State.IDLE;
         mStateManager = new StateManager(this);
+
+        if (mIconIdle != null) {
+            setLeftIcon(mIconIdle);
+        }
 
         setText(mIdleText);
 
@@ -197,8 +203,12 @@ public class CircularProgressButton extends Button {
             int completeDrawableId = attr.getResourceId(R.styleable.CircularProgressButton_cpb_iconComplete, 0);
             if (completeDrawableId != 0) mIconComplete = getResources().getDrawable(completeDrawableId);
 
+            int idleDrawableId = attr.getResourceId(R.styleable.CircularProgressButton_cpb_iconIdle, 0);
+            if (idleDrawableId != 0) mIconIdle = getResources().getDrawable(idleDrawableId);
+
             int errorDrawableId = attr.getResourceId(R.styleable.CircularProgressButton_cpb_iconError, 0);
             if (errorDrawableId != 0) mIconError = getResources().getDrawable(errorDrawableId);
+
             mCornerRadius = attr.getDimension(R.styleable.CircularProgressButton_cpb_cornerRadius, 0);
             mPaddingProgress = attr.getDimensionPixelSize(R.styleable.CircularProgressButton_cpb_paddingProgress, 0);
 
@@ -335,6 +345,8 @@ public class CircularProgressButton extends Button {
     }
 
     private void morphToProgress() {
+        onHide(State.IDLE);
+
         setWidth(getWidth());
         setText(null);
 
@@ -354,6 +366,8 @@ public class CircularProgressButton extends Button {
     private OnAnimationEndListener mProgressStateListener = new OnAnimationEndListener() {
         @Override
         public void onAnimationEnd() {
+            onShow(State.PROGRESS);
+
             mMorphingInProgress = false;
             mState = State.PROGRESS;
 
@@ -362,6 +376,8 @@ public class CircularProgressButton extends Button {
     };
 
     private void morphProgressToComplete() {
+        onHide(State.PROGRESS);
+
         MorphingAnimation animation = createProgressMorphing(getHeight(), mCornerRadius, getHeight(), getWidth());
 
         animation.setFromColor(mColorProgress);
@@ -377,6 +393,8 @@ public class CircularProgressButton extends Button {
     }
 
     private void morphIdleToComplete() {
+        onHide(State.IDLE);
+
         MorphingAnimation animation = createMorphing();
 
         animation.setFromColor(getNormalColor(mIdleColorState));
@@ -394,12 +412,8 @@ public class CircularProgressButton extends Button {
     private OnAnimationEndListener mCompleteStateListener = new OnAnimationEndListener() {
         @Override
         public void onAnimationEnd() {
-            if (mIconComplete != null) {
-                setText(null);
-                setIcon(mIconComplete);
-            } else {
-                setText(mCompleteText);
-            }
+            onShow(State.COMPLETE);
+            setText(mCompleteText);
             mMorphingInProgress = false;
             mState = State.COMPLETE;
 
@@ -408,6 +422,8 @@ public class CircularProgressButton extends Button {
     };
 
     private void morphCompleteToIdle() {
+        onHide(State.COMPLETE);
+
         MorphingAnimation animation = createMorphing();
 
         animation.setFromColor(getNormalColor(mCompleteColorState));
@@ -423,6 +439,8 @@ public class CircularProgressButton extends Button {
     }
 
     private void morphErrorToIdle() {
+        onHide(State.ERROR);
+
         MorphingAnimation animation = createMorphing();
 
         animation.setFromColor(getNormalColor(mErrorColorState));
@@ -440,7 +458,7 @@ public class CircularProgressButton extends Button {
     private OnAnimationEndListener mIdleStateListener = new OnAnimationEndListener() {
         @Override
         public void onAnimationEnd() {
-            removeIcon();
+            onShow(State.IDLE);
             setText(mIdleText);
             mMorphingInProgress = false;
             mState = State.IDLE;
@@ -450,6 +468,8 @@ public class CircularProgressButton extends Button {
     };
 
     private void morphIdleToError() {
+        onHide(State.IDLE);
+
         MorphingAnimation animation = createMorphing();
 
         animation.setFromColor(getNormalColor(mIdleColorState));
@@ -464,7 +484,68 @@ public class CircularProgressButton extends Button {
 
     }
 
+    private void onHide(State state) {
+        switch (state) {
+            case PROGRESS:
+                break;
+            case IDLE:
+                if (mIconIdle != null) {
+                    removeIcon();
+                }
+                setText(null);
+                break;
+            case COMPLETE:
+                if (mIconComplete != null) {
+                    removeIcon();
+                }
+                setText(null);
+                break;
+            case ERROR:
+                if (mIconError != null) {
+                    removeIcon();
+                }
+                setText(null);
+                break;
+        }
+    }
+
+    private void onShow(State state) {
+        switch (state) {
+            case PROGRESS:
+                break;
+            case IDLE:
+                if (mIconIdle != null) {
+                    if (!TextUtils.isEmpty(mIdleText)) {
+                        setLeftIcon(mIconIdle);
+                    } else {
+                        setIcon(mIconIdle);
+                    }
+                }
+                break;
+            case COMPLETE:
+                if (mIconComplete != null) {
+                    if (!TextUtils.isEmpty(mCompleteText)) {
+                        setLeftIcon(mIconComplete);
+                    } else {
+                        setIcon(mIconComplete);
+                    }
+                }
+                break;
+            case ERROR:
+                if (mIconError != null) {
+                    if (!TextUtils.isEmpty(mErrorText)) {
+                        setLeftIcon(mIconError);
+                    } else {
+                        setIcon(mIconError);
+                    }
+                }
+                break;
+        }
+    }
+
     private void morphProgressToError() {
+        onHide(State.PROGRESS);
+
         MorphingAnimation animation = createProgressMorphing(getHeight(), mCornerRadius, getHeight(), getWidth());
 
         animation.setFromColor(mColorProgress);
@@ -480,12 +561,8 @@ public class CircularProgressButton extends Button {
     private OnAnimationEndListener mErrorStateListener = new OnAnimationEndListener() {
         @Override
         public void onAnimationEnd() {
-            if (mIconComplete != null) {
-                setText(null);
-                setIcon(mIconError);
-            } else {
-                setText(mErrorText);
-            }
+            onShow(State.ERROR);
+            setText(mErrorText);
             mMorphingInProgress = false;
             mState = State.ERROR;
 
@@ -494,6 +571,8 @@ public class CircularProgressButton extends Button {
     };
 
     private void morphProgressToIdle() {
+        onHide(State.PROGRESS);
+
         MorphingAnimation animation = createProgressMorphing(getHeight(), mCornerRadius, getHeight(), getWidth());
 
         animation.setFromColor(mColorProgress);
@@ -524,8 +603,16 @@ public class CircularProgressButton extends Button {
         }
     }
 
+    private void setLeftIcon(Drawable drawable) {
+        if (drawable != null) {
+            int padding = (int) mCornerRadius / 2;
+            setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+            setPadding(padding, 0, 0, 0);
+        }
+    }
+
     protected void removeIcon() {
-        setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
         setPadding(0, 0, 0, 0);
     }
 
