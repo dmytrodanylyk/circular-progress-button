@@ -10,6 +10,7 @@
     <string name="StateChangeSample">State Change Sample</string>
     <string name="ProgressPaddingSample">Progress Padding Sample</string>
     <string name="CustomSelectorSample">Custom Selector Sample</string>
+    <string name="IconsAndTextSample">Icons and text sample</string>
 
     <array name="sample_list">
         <item>@string/IndeterminateProgressSample</item>
@@ -17,6 +18,7 @@
         <item>@string/StateChangeSample</item>
         <item>@string/ProgressPaddingSample</item>
         <item>@string/CustomSelectorSample</item>
+        <item>@string/IconsAndTextSample</item>
     </array>
 
 </resources>
