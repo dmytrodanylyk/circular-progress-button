@@ -115,7 +115,7 @@ public class CircularProgressButton extends Button {
         int colorPressed = getPressedColor(mIdleColorState);
         int colorFocused = getFocusedColor(mIdleColorState);
         int colorDisabled = getDisabledColor(mIdleColorState);
-        if(background == null) {
+        if (background == null) {
             background = createDrawable(colorNormal);
         }
 
@@ -581,6 +581,30 @@ public class CircularProgressButton extends Button {
 
     public void setStrokeColor(int color) {
         background.setStrokeColor(color);
+    }
+
+    public String getIdleText() {
+        return mIdleText;
+    }
+
+    public String getCompleteText() {
+        return mCompleteText;
+    }
+
+    public String getErrorText() {
+        return mErrorText;
+    }
+
+    public void setIdleText(String text) {
+        mIdleText = text;
+    }
+
+    public void setCompleteText(String text) {
+        mCompleteText = text;
+    }
+
+    public void setErrorText(String text) {
+        mErrorText = text;
     }
 
     @Override
