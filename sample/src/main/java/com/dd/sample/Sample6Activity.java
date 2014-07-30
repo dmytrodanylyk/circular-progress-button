@@ -23,7 +23,7 @@ public class Sample6Activity extends Activity {
 
         ActionBar actionBar = getActionBar();
         if(actionBar != null) {
-            actionBar.setTitle(R.string.IndeterminateProgressSample);
+            actionBar.setTitle(R.string.IconsAndTextSample);
         }
 
         final CircularProgressButton circularButton1 = (CircularProgressButton) findViewById(R.id.circularButton1);
