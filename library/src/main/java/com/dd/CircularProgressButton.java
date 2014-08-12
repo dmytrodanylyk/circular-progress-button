@@ -39,6 +39,7 @@ public class CircularProgressButton extends Button {
     private String mIdleText;
     private String mCompleteText;
     private String mErrorText;
+    private String mProgressText;
 
     private int mColorProgress;
     private int mColorIndicator;
@@ -186,6 +187,7 @@ public class CircularProgressButton extends Button {
             mIdleText = attr.getString(R.styleable.CircularProgressButton_cpb_textIdle);
             mCompleteText = attr.getString(R.styleable.CircularProgressButton_cpb_textComplete);
             mErrorText = attr.getString(R.styleable.CircularProgressButton_cpb_textError);
+            mProgressText = attr.getString(R.styleable.CircularProgressButton_cpb_textProgress);
 
             mIconComplete = attr.getResourceId(R.styleable.CircularProgressButton_cpb_iconComplete, 0);
             mIconError = attr.getResourceId(R.styleable.CircularProgressButton_cpb_iconError, 0);
@@ -326,7 +328,7 @@ public class CircularProgressButton extends Button {
 
     private void morphToProgress() {
         setWidth(getWidth());
-        setText(null);
+        setText(mProgressText);
 
         MorphingAnimation animation = createProgressMorphing(mCornerRadius, getHeight(), getWidth(), getHeight());
 
