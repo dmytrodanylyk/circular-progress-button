@@ -26,6 +26,15 @@ dependencies {
 
 If you want to contribute to this library make sure you send pull request to **dev** branch.
 
+### Used By
+
+List of applications on Play Store where this library is used, if you want to be added - ping me.
+
+Icon | Application
+------------ | -------------
+<img src="http://goo.gl/WL5GME" width="48" height="48" /> | [Passei Direto: Provas & Aulas]
+
+
 ### License
 
 ```
@@ -56,5 +65,6 @@ SOFTWARE.
 [Screenshots]:https://github.com/dmytrodanylyk/circular-progress-button/wiki/Screenshots
 [User Guide]:https://github.com/dmytrodanylyk/circular-progress-button/wiki/User-Guide
 [Gradle, Please]:http://gradleplease.appspot.com/
+[Passei Direto: Provas & Aulas]:https://play.google.com/store/apps/details?id=br.com.passeidireto
 
 [![Analytics](https://ga-beacon.appspot.com/UA-44382495-3/circular-progress-button/readme)](https://github.com/igrigorik/ga-beacon)
