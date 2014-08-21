@@ -5,7 +5,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.10.+'
+        // Gradle VM Options for Intellij Idea 13
+        // -Didea.version=13
+        classpath group: 'com.android.tools.build', name: "gradle", version: getBuildscript().toolsVersion
     }
 }
 
