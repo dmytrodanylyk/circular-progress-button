@@ -1,8 +1,6 @@
-### Description
+### Description [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.dmytrodanylyk.circular-progress-button/library/badge.png?style=flat)](https://maven-badges.herokuapp.com/maven-central/cz.jirutka.rsql/rsql-parser)
 
 Android Button which can morph to Circular Progress
-
-Latest version **1.1.0**
 
 ![](screenshots/intro.gif)
 
