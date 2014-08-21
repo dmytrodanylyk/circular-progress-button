@@ -1,16 +1,4 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.10.+'
-    }
-}
 apply plugin: 'android-library'
-
-repositories {
-        mavenCentral()
-}
 
 android {
     compileSdkVersion Integer.parseInt(project.COMPILE_SDK_VERSION)
@@ -30,9 +18,4 @@ android {
     }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-}
-
-// Used to push in maven
-//apply from: '../maven_push.gradle'
+apply from: 'https://raw.githubusercontent.com/jpardogo/gradle-mvn-push/master/gradle-mvn-push.gradle'

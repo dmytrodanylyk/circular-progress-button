@@ -1,16 +1,4 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.10.+'
-    }
-}
 apply plugin: 'android'
-
-repositories {
-        mavenCentral()
-}
 
 android {
     compileSdkVersion Integer.parseInt(project.COMPILE_SDK_VERSION)
@@ -31,7 +19,5 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.0'
-//    compile project(':library')
+    compile project(':library')
 }
