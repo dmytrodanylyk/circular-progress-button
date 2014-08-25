@@ -16,7 +16,7 @@ The lib is available on Maven Central, you can find it with [Gradle, please]
 
 ```
 dependencies {
-    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.0'
+    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.1'
 }
 ```
 
