@@ -1,8 +1,6 @@
-### Description
+### Description [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.dmytrodanylyk.circular-progress-button/library/badge.png?style=flat)](https://maven-badges.herokuapp.com/maven-central/cz.jirutka.rsql/rsql-parser) [![Android Arsenal](http://img.shields.io/badge/Android%20Arsenal-Circular%20Progress%20Button-brightgreen.png?style=flat)](http://android-arsenal.com/details/1/67)
 
 Android Button which can morph to Circular Progress
-
-Latest version **1.1.0**
 
 ![](screenshots/intro.gif)
 
@@ -18,7 +16,7 @@ The lib is available on Maven Central, you can find it with [Gradle, please]
 
 ```
 dependencies {
-    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.0'
+    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.1'
 }
 ```
 

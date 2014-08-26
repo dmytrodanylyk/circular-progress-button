@@ -1,3 +1,9 @@
+## 1.1.1
+* Added Getters and Setters for idle, complete and error text
+* Added `cpb_textProgress`attribute to display text in progress mode
+* Gradle build script update: Intellij IDEA 13 uses gradle 0.10.+ / Android Studio uses gradle 0.12.+
+* Added Android Arsenal, Maven Badges
+
 ## 1.1.0 (Major API Changes)
 * Implement selector for button background #4
 * Added Custom Selector Sample
