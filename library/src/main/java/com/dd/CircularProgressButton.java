@@ -573,7 +573,7 @@ public class CircularProgressButton extends Button {
 
   @Override
   public void setEnabled(final boolean enabled) {
-    mStateManager.saveEnabled(enabled);
+  	if(mStateManager != null) mStateManager.saveEnabled(enabled);
     if(!mMorphingInProgress) {
       super.setEnabled(enabled);
     }
