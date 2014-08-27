@@ -1,3 +1,6 @@
+## 1.1.2
+* Gradle build script update
+
 ## 1.1.1
 * Added Getters and Setters for idle, complete and error text
 * Added `cpb_textProgress`attribute to display text in progress mode

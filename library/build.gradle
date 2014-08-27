@@ -1,9 +1,5 @@
 apply plugin: 'android-library'
 
-repositories {
-        mavenCentral()
-}
-
 android {
     compileSdkVersion Integer.parseInt(project.COMPILE_SDK_VERSION)
     buildToolsVersion project.BUILD_TOOLS_VERSION

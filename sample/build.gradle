@@ -1,9 +1,5 @@
 apply plugin: 'android'
 
-repositories {
-        mavenCentral()
-}
-
 android {
     compileSdkVersion Integer.parseInt(project.COMPILE_SDK_VERSION)
     buildToolsVersion project.BUILD_TOOLS_VERSION
@@ -24,6 +20,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-//    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.0'
+//    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.1.0-SNAPSHOT@aar'
     compile project(':library')
 }
