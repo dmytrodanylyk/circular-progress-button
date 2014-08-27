@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="define_circularprogressbutton">circularprogressbutton</string>
+    <string name="library_circularprogressbutton_author">Dmytro Danylyk</string>
+    <string name="library_circularprogressbutton_authorWebsite">http://dmytrodanylyk.com/</string>
+    <string name="library_circularprogressbutton_libraryName">Circular Progress Button</string>
+    <string name="library_circularprogressbutton_libraryDescription">Android Button which can morph to Circular Progress.</string>
+    <string name="library_circularprogressbutton_libraryVersion">1.1.0</string>
+    <string name="library_circularprogressbutton_libraryWebsite">http://dmytrodanylyk.com/pages/portfolio/circular-progress-button.html</string>
+    <string name="library_circularprogressbutton_licenseId">mit</string>
+    <string name="library_circularprogressbutton_isOpenSource">true</string>
+    <string name="library_circularprogressbutton_repositoryLink">https://github.com/dmytrodanylyk/circular-progress-button</string>
+</resources>
