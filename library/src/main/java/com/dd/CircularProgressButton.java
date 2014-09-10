@@ -21,6 +21,8 @@ public class CircularProgressButton extends Button {
 
     public static final int IDLE_STATE_PROGRESS = 0;
     public static final int ERROR_STATE_PROGRESS = -1;
+    public static final int SUCCESS_STATE_PROGRESS = 100;
+    public static final int INDETERMINATE_STATE_PROGRESS = 50;
 
     private StrokeGradientDrawable background;
     private CircularAnimatedDrawable mAnimatedDrawable;
