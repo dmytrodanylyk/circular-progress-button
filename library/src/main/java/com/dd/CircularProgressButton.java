@@ -474,7 +474,7 @@ public class CircularProgressButton extends Button {
     private OnAnimationEndListener mErrorStateListener = new OnAnimationEndListener() {
         @Override
         public void onAnimationEnd() {
-            if (mIconComplete != 0) {
+            if (mIconError != 0) {
                 setText(null);
                 setIcon(mIconError);
             } else {
