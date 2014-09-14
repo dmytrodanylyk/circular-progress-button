@@ -1,3 +1,9 @@
+## 1.1.3
+* Added int constants`SUCCESS_STATE_PROGRESS = 100` and `INDETERMINATE_STATE_PROGRESS = 50` to `CircularProgressButton`
+* Fixed issue #40 Attribute `cpp_iconError` doesn't work when `cpp_iconSuccess` is not set
+* Fixed issue #49 Changed progress from `float` to `int`
+* Fixed issue #47 Removed unused resources from the library. Added `cpb_` prefix to all resourced inside library to limit name conflict.
+
 ## 1.1.2
 * Gradle build script update
 

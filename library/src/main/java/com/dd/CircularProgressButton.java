@@ -21,6 +21,8 @@ public class CircularProgressButton extends Button {
 
     public static final int IDLE_STATE_PROGRESS = 0;
     public static final int ERROR_STATE_PROGRESS = -1;
+    public static final int SUCCESS_STATE_PROGRESS = 100;
+    public static final int INDETERMINATE_STATE_PROGRESS = 50;
 
     private StrokeGradientDrawable background;
     private CircularAnimatedDrawable mAnimatedDrawable;
@@ -57,7 +59,7 @@ public class CircularProgressButton extends Button {
     }
 
     private int mMaxProgress;
-    private float mProgress;
+    private int mProgress;
 
     private boolean mMorphingInProgress;
 
@@ -77,7 +79,7 @@ public class CircularProgressButton extends Button {
     }
 
     private void init(Context context, AttributeSet attributeSet) {
-        mStrokeWidth = (int) getContext().getResources().getDimension(R.dimen.stroke_width);
+        mStrokeWidth = (int) getContext().getResources().getDimension(R.dimen.cpb_stroke_width);
 
         initAttributes(context, attributeSet);
 
@@ -148,7 +150,7 @@ public class CircularProgressButton extends Button {
     }
 
     private StrokeGradientDrawable createDrawable(int color) {
-        GradientDrawable drawable = (GradientDrawable) getResources().getDrawable(R.drawable.background).mutate();
+        GradientDrawable drawable = (GradientDrawable) getResources().getDrawable(R.drawable.cpb_background).mutate();
         drawable.setColor(color);
         drawable.setCornerRadius(mCornerRadius);
         StrokeGradientDrawable strokeGradientDrawable = new StrokeGradientDrawable(drawable);
@@ -194,20 +196,20 @@ public class CircularProgressButton extends Button {
             mCornerRadius = attr.getDimension(R.styleable.CircularProgressButton_cpb_cornerRadius, 0);
             mPaddingProgress = attr.getDimensionPixelSize(R.styleable.CircularProgressButton_cpb_paddingProgress, 0);
 
-            int blue = getColor(R.color.blue);
-            int white = getColor(R.color.white);
-            int grey = getColor(R.color.grey);
+            int blue = getColor(R.color.cpb_blue);
+            int white = getColor(R.color.cpb_white);
+            int grey = getColor(R.color.cpb_grey);
 
             int idleStateSelector = attr.getResourceId(R.styleable.CircularProgressButton_cpb_selectorIdle,
-                    R.color.idle_state_selector);
+                    R.color.cpb_idle_state_selector);
             mIdleColorState = getResources().getColorStateList(idleStateSelector);
 
             int completeStateSelector = attr.getResourceId(R.styleable.CircularProgressButton_cpb_selectorComplete,
-                    R.color.complete_state_selector);
+                    R.color.cpb_complete_state_selector);
             mCompleteColorState = getResources().getColorStateList(completeStateSelector);
 
             int errorStateSelector = attr.getResourceId(R.styleable.CircularProgressButton_cpb_selectorError,
-                    R.color.error_state_selector);
+                    R.color.cpb_error_state_selector);
             mErrorColorState = getResources().getColorStateList(errorStateSelector);
 
             mColorProgress = attr.getColor(R.styleable.CircularProgressButton_cpb_colorProgress, white);
@@ -472,7 +474,7 @@ public class CircularProgressButton extends Button {
     private OnAnimationEndListener mErrorStateListener = new OnAnimationEndListener() {
         @Override
         public void onAnimationEnd() {
-            if (mIconComplete != 0) {
+            if (mIconError != 0) {
                 setText(null);
                 setIcon(mIconError);
             } else {
@@ -535,7 +537,7 @@ public class CircularProgressButton extends Button {
         }
     }
 
-    public void setProgress(float progress) {
+    public void setProgress(int progress) {
         mProgress = progress;
 
         if (mMorphingInProgress || getWidth() == 0) {
@@ -573,7 +575,7 @@ public class CircularProgressButton extends Button {
         }
     }
 
-    public float getProgress() {
+    public int getProgress() {
         return mProgress;
     }
 
@@ -647,7 +649,7 @@ public class CircularProgressButton extends Button {
 
         private boolean mIndeterminateProgressMode;
         private boolean mConfigurationChanged;
-        private float mProgress;
+        private int mProgress;
 
         public SavedState(Parcelable parcel) {
             super(parcel);
@@ -663,7 +665,7 @@ public class CircularProgressButton extends Button {
         @Override
         public void writeToParcel(Parcel out, int flags) {
             super.writeToParcel(out, flags);
-            out.writeFloat(mProgress);
+            out.writeInt(mProgress);
             out.writeInt(mIndeterminateProgressMode ? 1 : 0);
             out.writeInt(mConfigurationChanged ? 1 : 0);
         }

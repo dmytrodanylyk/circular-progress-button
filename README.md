@@ -16,7 +16,7 @@ The lib is available on Maven Central, you can find it with [Gradle, please]
 
 ```
 dependencies {
-    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.2'
+    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'
 }
 ```
 
@@ -31,6 +31,7 @@ List of applications on Play Store where this library is used, if you want to be
 Icon | Application
 ------------ | -------------
 <img src="http://goo.gl/WL5GME" width="48" height="48" /> | [Passei Direto: Provas & Aulas]
+<img src="http://goo.gl/dU3ofw" width="48" height="48" /> | [Finger Gesture Launcher]
 
 
 ### License
@@ -64,5 +65,6 @@ SOFTWARE.
 [User Guide]:https://github.com/dmytrodanylyk/circular-progress-button/wiki/User-Guide
 [Gradle, Please]:http://gradleplease.appspot.com/
 [Passei Direto: Provas & Aulas]:https://play.google.com/store/apps/details?id=br.com.passeidireto
+[Finger Gesture Launcher]:https://play.google.com/store/apps/details?id=com.carlosdelachica.finger
 
 [![Analytics](https://ga-beacon.appspot.com/UA-44382495-3/circular-progress-button/readme)](https://github.com/igrigorik/ga-beacon)
