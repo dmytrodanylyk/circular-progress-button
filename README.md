@@ -31,7 +31,7 @@ List of applications on Play Store where this library is used, if you want to be
 Icon | Application
 ------------ | -------------
 <img src="http://goo.gl/WL5GME" width="48" height="48" /> | [Passei Direto: Provas & Aulas]
-<img src="http://goo.gl/dU3ofw" width="48" height="48" /> | [Finger Gesture Launcher]
+<img src="http://goo.gl/HIKRF9" width="48" height="48" /> | [Finger Gesture Launcher]
 
 
 ### License
