@@ -8,6 +8,7 @@
         <attr name="cpb_textIdle" format="string"/>
         <attr name="cpb_textError" format="string"/>
         <attr name="cpb_textProgress" format="string"/>
+        <attr name="cpb_colorText" format="color"/>
         <attr name="cpb_colorProgress" format="color"/>
         <attr name="cpb_colorIndicator" format="color"/>
         <attr name="cpb_colorIndicatorBackground" format="color"/>

@@ -43,7 +43,8 @@ public class CircularProgressButton extends Button {
     private String mErrorText;
     private String mProgressText;
 
-    private int mColorProgress;
+    private int mColorText;
+    private int mColorBackgroundProgress;
     private int mColorIndicator;
     private int mColorIndicatorBackground;
     private int mIconComplete;
@@ -212,7 +213,8 @@ public class CircularProgressButton extends Button {
                     R.color.cpb_error_state_selector);
             mErrorColorState = getResources().getColorStateList(errorStateSelector);
 
-            mColorProgress = attr.getColor(R.styleable.CircularProgressButton_cpb_colorProgress, white);
+            mColorText = attr.getColor(R.styleable.CircularProgressButton_cpb_colorText, white);
+            mColorBackgroundProgress = attr.getColor(R.styleable.CircularProgressButton_cpb_colorProgress, white);
             mColorIndicator = attr.getColor(R.styleable.CircularProgressButton_cpb_colorIndicator, blue);
             mColorIndicatorBackground =
                     attr.getColor(R.styleable.CircularProgressButton_cpb_colorIndicatorBackground, grey);
@@ -335,7 +337,7 @@ public class CircularProgressButton extends Button {
         MorphingAnimation animation = createProgressMorphing(mCornerRadius, getHeight(), getWidth(), getHeight());
 
         animation.setFromColor(getNormalColor(mIdleColorState));
-        animation.setToColor(mColorProgress);
+        animation.setToColor(mColorBackgroundProgress);
 
         animation.setFromStrokeColor(getNormalColor(mIdleColorState));
         animation.setToStrokeColor(mColorIndicatorBackground);
@@ -358,7 +360,7 @@ public class CircularProgressButton extends Button {
     private void morphProgressToComplete() {
         MorphingAnimation animation = createProgressMorphing(getHeight(), mCornerRadius, getHeight(), getWidth());
 
-        animation.setFromColor(mColorProgress);
+        animation.setFromColor(mColorText);
         animation.setToColor(getNormalColor(mCompleteColorState));
 
         animation.setFromStrokeColor(mColorIndicator);
@@ -461,7 +463,7 @@ public class CircularProgressButton extends Button {
     private void morphProgressToError() {
         MorphingAnimation animation = createProgressMorphing(getHeight(), mCornerRadius, getHeight(), getWidth());
 
-        animation.setFromColor(mColorProgress);
+        animation.setFromColor(mColorText);
         animation.setToColor(getNormalColor(mErrorColorState));
 
         animation.setFromStrokeColor(mColorIndicator);
@@ -490,7 +492,7 @@ public class CircularProgressButton extends Button {
     private void morphProgressToIdle() {
         MorphingAnimation animation = createProgressMorphing(getHeight(), mCornerRadius, getHeight(), getWidth());
 
-        animation.setFromColor(mColorProgress);
+        animation.setFromColor(mColorText);
         animation.setToColor(getNormalColor(mIdleColorState));
 
         animation.setFromStrokeColor(mColorIndicator);
@@ -581,6 +583,10 @@ public class CircularProgressButton extends Button {
 
     public void setBackgroundColor(int color) {
         background.getGradientDrawable().setColor(color);
+    }
+
+    public void setBackgroundColorProgress(int color) {
+        mColorBackgroundProgress = color;
     }
 
     public void setStrokeColor(int color) {
