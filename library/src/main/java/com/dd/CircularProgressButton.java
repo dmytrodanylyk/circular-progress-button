@@ -358,7 +358,7 @@ public class CircularProgressButton extends Button {
 
         MorphingAnimation animation = createProgressMorphing(mCornerRadius, getHeight(), getWidth(), getHeight());
 
-        animation.setFromColor(getNormalColor(mIdleColorState));
+        animation.setFromColor(mColorBackgroundProgress);
         animation.setToColor(mColorBackgroundProgress);
 
         animation.setFromStrokeColor(getNormalColor(mIdleColorState));
@@ -386,7 +386,7 @@ public class CircularProgressButton extends Button {
 
         MorphingAnimation animation = createProgressMorphing(getHeight(), mCornerRadius, getHeight(), getWidth());
 
-        animation.setFromColor(mColorText);
+        animation.setFromColor(mColorBackgroundProgress);
         animation.setToColor(getNormalColor(mCompleteColorState));
 
         animation.setFromStrokeColor(mColorIndicator);
