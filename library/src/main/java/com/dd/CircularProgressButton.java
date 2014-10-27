@@ -47,6 +47,7 @@ public class CircularProgressButton extends Button {
     private Drawable mIconComplete;
     private Drawable mIconError;
     private Drawable mIconIdle;
+    private Drawable mIconProgress;
     private int mStrokeWidth;
     private int mPaddingProgress;
     private float mCornerRadius;
@@ -77,16 +78,19 @@ public class CircularProgressButton extends Button {
         init(context, attrs);
     }
 
-    public void setIconComplete(Drawable mIconComplete) {
-        this.mIconComplete = mIconComplete;
+    public void setIconComplete(Drawable iconComplete) {
+        mIconComplete = iconComplete;
     }
 
-    public void setIconIdle(Drawable mIconIdle) {
-        this.mIconIdle = mIconIdle;
+    public void setIconProgress(Drawable iconProgress) {
+        mIconProgress = iconProgress;
+    }
+    public void setIconIdle(Drawable iconIdle) {
+        mIconIdle = iconIdle;
     }
 
-    public void setIconError(Drawable mIconError) {
-        this.mIconError = mIconError;
+    public void setIconError(Drawable iconError) {
+        mIconError = iconError;
     }
 
     private void init(Context context, AttributeSet attributeSet) {
@@ -210,6 +214,9 @@ public class CircularProgressButton extends Button {
 
             int idleDrawableId = attr.getResourceId(R.styleable.CircularProgressButton_cpb_iconIdle, 0);
             if (idleDrawableId != 0) mIconIdle = getResources().getDrawable(idleDrawableId);
+
+            int progressDrawableId = attr.getResourceId(R.styleable.CircularProgressButton_cpb_iconProgress, 0);
+            if (progressDrawableId != 0) mIconProgress = getResources().getDrawable(progressDrawableId);
 
             int errorDrawableId = attr.getResourceId(R.styleable.CircularProgressButton_cpb_iconError, 0);
             if (errorDrawableId != 0) mIconError = getResources().getDrawable(errorDrawableId);
@@ -518,6 +525,7 @@ public class CircularProgressButton extends Button {
     private void onShow(State state) {
         switch (state) {
             case PROGRESS:
+                setIcon(mIconProgress);
                 break;
             case IDLE:
                 if (mIconIdle != null) {
