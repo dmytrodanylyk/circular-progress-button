@@ -3,4 +3,4 @@ include ':sample', ':library'
 import org.gradle.api.internal.initialization.DefaultScriptHandler
 
 boolean isIdea13 = System.properties["idea.version"]?.toString()?.equals("13")
-DefaultScriptHandler.metaClass.toolsVersion = isIdea13 ? "0.10.+" : "0.12.+"
+DefaultScriptHandler.metaClass.toolsVersion = isIdea13 ? "0.10.+" : "0.14.4"

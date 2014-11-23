@@ -3,7 +3,7 @@ package com.dd;
 class StateManager {
 
     private boolean mIsEnabled;
-    private int mProgress;
+    private float mProgress;
 
     public StateManager(CircularProgressButton progressButton) {
         mIsEnabled = progressButton.isEnabled();
@@ -18,7 +18,7 @@ class StateManager {
         return mIsEnabled;
     }
 
-    public int getProgress() {
+    public float getProgress() {
         return mProgress;
     }
 
