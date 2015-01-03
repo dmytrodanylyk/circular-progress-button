@@ -33,7 +33,7 @@ Icon | Application
 <img src="http://goo.gl/WL5GME" width="48" height="48" /> | [Passei Direto: Provas & Aulas]
 <img src="http://goo.gl/HIKRF9" width="48" height="48" /> | [Finger Gesture Launcher]
 
- ### Sample
+### Sample
 
 <a href="https://play.google.com/store/apps/details?id=com.dd.sample.progressbutton">
   <img alt="Android app on Google Play"
