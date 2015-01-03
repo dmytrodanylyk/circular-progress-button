@@ -1,7 +1,5 @@
 package com.dd;
 
-import com.dd.circular.progress.button.R;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -16,6 +14,8 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.StateSet;
 import android.widget.Button;
+
+import com.dd.circular.progress.button.R;
 
 public class CircularProgressButton extends Button {
 
@@ -581,7 +581,15 @@ public class CircularProgressButton extends Button {
         }
     }
 
-    public int getProgress() {
+  @Override
+  public void setEnabled(final boolean enabled) {
+  	if(mStateManager != null) mStateManager.saveEnabled(enabled);
+    if(!mMorphingInProgress) {
+      super.setEnabled(enabled);
+    }
+  }
+
+  public int getProgress() {
         return mProgress;
     }
 
