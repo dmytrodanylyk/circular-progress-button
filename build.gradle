@@ -2,13 +2,10 @@
 
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
     dependencies {
-        // Gradle VM Options for Intellij Idea 13
-        // -Didea.version=13
-        classpath group: 'com.android.tools.build', name: "gradle", version: getBuildscript().toolsVersion
-        // classpath 'com.android.tools.build:gradle:0.10.+'
+        classpath 'com.android.tools.build:gradle:0.14.2'
     }
 }
 
@@ -21,7 +18,7 @@ allprojects {
     group = GROUP
 
     repositories {
-        mavenCentral()
+        jcenter()
         maven {
             url "https://oss.sonatype.org/content/repositories/snapshots/"
         }

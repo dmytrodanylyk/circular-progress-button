@@ -1,4 +1,4 @@
-### Description [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.dmytrodanylyk.circular-progress-button/library/badge.png?style=flat)](https://maven-badges.herokuapp.com/maven-central/cz.jirutka.rsql/rsql-parser) [![Android Arsenal](http://img.shields.io/badge/Android%20Arsenal-Circular%20Progress%20Button-brightgreen.png?style=flat)](http://android-arsenal.com/details/1/67)
+### Description [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.dmytrodanylyk.circular-progress-button/library/badge.png?style=flat)](http://goo.gl/cKevJjr) [![Android Arsenal](http://img.shields.io/badge/Android%20Arsenal-Circular%20Progress%20Button-brightgreen.png?style=flat)](http://android-arsenal.com/details/1/67)
 
 Android Button which can morph to Circular Progress
 
@@ -33,6 +33,16 @@ Icon | Application
 <img src="http://goo.gl/WL5GME" width="48" height="48" /> | [Passei Direto: Provas & Aulas]
 <img src="http://goo.gl/HIKRF9" width="48" height="48" /> | [Finger Gesture Launcher]
 
+ ### Sample
+
+<a href="https://play.google.com/store/apps/details?id=com.dd.sample.progressbutton">
+  <img alt="Android app on Google Play"
+       src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" />
+</a>
+<a href="https://play.google.com/store/apps/details?id=com.inappsquared.devappsdirect">
+  <img alt="DevAppsDirect"
+       src="http://www.inappsquared.com/img/icons/devappsdirect_icon.png" width="48" height="48" />
+</a>
 
 ### License
 

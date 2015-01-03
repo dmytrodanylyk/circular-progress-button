@@ -1,12 +1,15 @@
-apply plugin: 'android'
+import java.text.SimpleDateFormat
+
+apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion Integer.parseInt(project.COMPILE_SDK_VERSION)
-    buildToolsVersion project.BUILD_TOOLS_VERSION
+    compileSdkVersion 21
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
-        minSdkVersion Integer.parseInt(project.MIN_SDK_VERSION)
-        targetSdkVersion Integer.parseInt(project.TARGET_SDK_VERSION)
+        minSdkVersion 14
+        targetSdkVersion 21
+        applicationId project.PACKAGE_NAME
         versionCode Integer.parseInt(project.VERSION_CODE)
         versionName project.VERSION_NAME
     }
@@ -16,6 +19,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+
+    applicationVariants.all { variant ->
+        def oldFile = variant.outputFile
+        def newPath = "${variant.name}" + "_" + "${variant.versionName}" + "_" + "${variant.versionCode}" + "_" + getDate() + ".apk";
+        variant.outputFile = new File(oldFile.parentFile, newPath)
+    }
+}
+
+def getDate() {
+    def formatter = new SimpleDateFormat('dd-MM-yyyy');
+    def date = new Date();
+    return formatter.format(date);
 }
 
 dependencies {
