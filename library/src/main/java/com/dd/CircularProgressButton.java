@@ -3,6 +3,7 @@ package com.dd;
 import com.dd.circular.progress.button.R;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -76,6 +77,12 @@ public class CircularProgressButton extends Button {
 
     public CircularProgressButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init(context, attrs);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public CircularProgressButton(Context context, AttributeSet attrs, int defStyle, int defStyleRes) {
+        super(context, attrs, defStyle, defStyleRes);
         init(context, attrs);
     }
 
