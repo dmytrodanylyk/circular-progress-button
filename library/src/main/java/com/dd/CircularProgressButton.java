@@ -48,7 +48,8 @@ public class CircularProgressButton extends Button {
     private int mColorIndicatorBackground;
     private int mIconComplete;
     private int mIconError;
-    private int mStrokeWidth;
+    private int mIdleStrokeWidth;
+    private int mProgressStrokeWidth;
     private int mPaddingProgress;
     private float mCornerRadius;
     private boolean mIndeterminateProgressMode;
@@ -79,8 +80,6 @@ public class CircularProgressButton extends Button {
     }
 
     private void init(Context context, AttributeSet attributeSet) {
-        mStrokeWidth = (int) getContext().getResources().getDimension(R.dimen.cpb_stroke_width);
-
         initAttributes(context, attributeSet);
 
         mMaxProgress = 100;
@@ -155,7 +154,7 @@ public class CircularProgressButton extends Button {
         drawable.setCornerRadius(mCornerRadius);
         StrokeGradientDrawable strokeGradientDrawable = new StrokeGradientDrawable(drawable);
         strokeGradientDrawable.setStrokeColor(color);
-        strokeGradientDrawable.setStrokeWidth(mStrokeWidth);
+        strokeGradientDrawable.setStrokeWidth(mIdleStrokeWidth);
 
         return strokeGradientDrawable;
     }
@@ -185,6 +184,12 @@ public class CircularProgressButton extends Button {
         }
 
         try {
+
+            final int defaultIdleStrokeWidth = getResources().getDimensionPixelSize(R.dimen.cpb_idle_stroke_width);
+            mIdleStrokeWidth = attr.getDimensionPixelSize(R.styleable.CircularProgressButton_cpb_idle_stroke_width, defaultIdleStrokeWidth);
+
+            final int defaultProgressStrokeWidth = getResources().getDimensionPixelSize(R.dimen.cpb_progress_stroke_width);
+            mProgressStrokeWidth = attr.getDimensionPixelSize(R.styleable.CircularProgressButton_cpb_progress_stroke_width, defaultProgressStrokeWidth);
 
             mIdleText = attr.getString(R.styleable.CircularProgressButton_cpb_textIdle);
             mCompleteText = attr.getString(R.styleable.CircularProgressButton_cpb_textComplete);
@@ -245,7 +250,7 @@ public class CircularProgressButton extends Button {
     private void drawIndeterminateProgress(Canvas canvas) {
         if (mAnimatedDrawable == null) {
             int offset = (getWidth() - getHeight()) / 2;
-            mAnimatedDrawable = new CircularAnimatedDrawable(mColorIndicator, mStrokeWidth);
+            mAnimatedDrawable = new CircularAnimatedDrawable(mColorIndicator, mProgressStrokeWidth);
             int left = offset + mPaddingProgress;
             int right = getWidth() - offset - mPaddingProgress;
             int bottom = getHeight() - mPaddingProgress;
@@ -262,7 +267,7 @@ public class CircularProgressButton extends Button {
         if (mProgressDrawable == null) {
             int offset = (getWidth() - getHeight()) / 2;
             int size = getHeight() - mPaddingProgress * 2;
-            mProgressDrawable = new CircularProgressDrawable(size, mStrokeWidth, mColorIndicator);
+            mProgressDrawable = new CircularProgressDrawable(size, mProgressStrokeWidth, mColorIndicator);
             int left = offset + mPaddingProgress;
             mProgressDrawable.setBounds(left, mPaddingProgress, left, mPaddingProgress);
         }
