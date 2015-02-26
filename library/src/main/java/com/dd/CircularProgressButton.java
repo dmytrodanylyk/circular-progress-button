@@ -207,6 +207,7 @@ public class CircularProgressButton extends Button {
             mIconError = attr.getResourceId(R.styleable.CircularProgressButton_cpb_iconError, 0);
             mCornerRadius = attr.getDimension(R.styleable.CircularProgressButton_cpb_cornerRadius, 0);
             mPaddingProgress = attr.getDimensionPixelSize(R.styleable.CircularProgressButton_cpb_paddingProgress, 0);
+            mIndeterminateProgressMode = attr.getBoolean(R.styleable.CircularProgressButton_cpb_progressIndeterminate, false);
 
             int blue = getColor(R.color.cpb_blue);
             int white = getColor(R.color.cpb_white);
