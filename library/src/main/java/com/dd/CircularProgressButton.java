@@ -193,10 +193,10 @@ public class CircularProgressButton extends Button {
         try {
 
             final int defaultIdleStrokeWidth = getResources().getDimensionPixelSize(R.dimen.cpb_idle_stroke_width);
-            mIdleStrokeWidth = attr.getDimensionPixelSize(R.styleable.CircularProgressButton_cpb_idle_stroke_width, defaultIdleStrokeWidth);
+            mIdleStrokeWidth = attr.getDimensionPixelSize(R.styleable.CircularProgressButton_cpb_idleStrokeWidth, defaultIdleStrokeWidth);
 
             final int defaultProgressStrokeWidth = getResources().getDimensionPixelSize(R.dimen.cpb_progress_stroke_width);
-            mProgressStrokeWidth = attr.getDimensionPixelSize(R.styleable.CircularProgressButton_cpb_progress_stroke_width, defaultProgressStrokeWidth);
+            mProgressStrokeWidth = attr.getDimensionPixelSize(R.styleable.CircularProgressButton_cpb_progressStrokeWidth, defaultProgressStrokeWidth);
 
             mIdleText = attr.getString(R.styleable.CircularProgressButton_cpb_textIdle);
             mCompleteText = attr.getString(R.styleable.CircularProgressButton_cpb_textComplete);

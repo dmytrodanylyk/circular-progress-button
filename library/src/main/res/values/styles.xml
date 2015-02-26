@@ -16,8 +16,8 @@
         <attr name="cpb_cornerRadius" format="dimension"/>
         <attr name="cpb_paddingProgress" format="dimension"/>
         <attr name="cpb_background" format="reference"/>
-        <attr name="cpb_idle_stroke_width" format="dimension"/>
-        <attr name="cpb_progress_stroke_width" format="dimension"/>
+        <attr name="cpb_idleStrokeWidth" format="dimension"/>
+        <attr name="cpb_progressStrokeWidth" format="dimension"/>
         <attr name="cpb_progressIndeterminate" format="boolean"/>
     </declare-styleable>
 
