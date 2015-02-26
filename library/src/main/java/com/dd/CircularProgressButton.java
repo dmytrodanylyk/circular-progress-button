@@ -67,27 +67,27 @@ public class CircularProgressButton extends Button {
 
     public CircularProgressButton(Context context) {
         super(context);
-        init(context, null);
+        init(context, null, 0, 0);
     }
 
     public CircularProgressButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
+        init(context, attrs, 0, 0);
     }
 
-    public CircularProgressButton(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(context, attrs);
+    public CircularProgressButton(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(context, attrs, defStyleAttr, 0);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public CircularProgressButton(Context context, AttributeSet attrs, int defStyle, int defStyleRes) {
-        super(context, attrs, defStyle, defStyleRes);
-        init(context, attrs);
+    public CircularProgressButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    private void init(Context context, AttributeSet attributeSet) {
-        initAttributes(context, attributeSet);
+    private void init(Context context, AttributeSet attributeSet, int defStyleAttr, int defStyleRes) {
+        initAttributes(context, attributeSet, defStyleAttr, defStyleRes);
 
         mMaxProgress = 100;
         mState = State.IDLE;
@@ -184,8 +184,8 @@ public class CircularProgressButton extends Button {
         }
     }
 
-    private void initAttributes(Context context, AttributeSet attributeSet) {
-        TypedArray attr = getTypedArray(context, attributeSet, R.styleable.CircularProgressButton);
+    private void initAttributes(Context context, AttributeSet attributeSet, int defStyleAttr, int defStyleRes) {
+        TypedArray attr = context.obtainStyledAttributes(attributeSet, R.styleable.CircularProgressButton, defStyleAttr, defStyleRes);
         if (attr == null) {
             return;
         }
@@ -235,10 +235,6 @@ public class CircularProgressButton extends Button {
 
     protected int getColor(int id) {
         return getResources().getColor(id);
-    }
-
-    protected TypedArray getTypedArray(Context context, AttributeSet attributeSet, int[] attr) {
-        return context.obtainStyledAttributes(attributeSet, attr, 0, 0);
     }
 
     @Override
