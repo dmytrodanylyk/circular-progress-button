@@ -203,6 +203,10 @@ public class CircularProgressButton extends Button {
             mErrorText = attr.getText(R.styleable.CircularProgressButton_cpb_textError);
             mProgressText = attr.getText(R.styleable.CircularProgressButton_cpb_textProgress);
 
+            if (mIdleText == null) { // Use native text attribute if 'cpb_textIdle' is empty
+                mIdleText = getText();
+            }
+
             mIconComplete = attr.getResourceId(R.styleable.CircularProgressButton_cpb_iconComplete, 0);
             mIconError = attr.getResourceId(R.styleable.CircularProgressButton_cpb_iconError, 0);
             mCornerRadius = attr.getDimension(R.styleable.CircularProgressButton_cpb_cornerRadius, 0);
