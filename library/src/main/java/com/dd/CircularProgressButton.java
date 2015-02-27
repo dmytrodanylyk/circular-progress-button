@@ -39,10 +39,10 @@ public class CircularProgressButton extends Button {
 
     private StateManager mStateManager;
     private State mState;
-    private String mIdleText;
-    private String mCompleteText;
-    private String mErrorText;
-    private String mProgressText;
+    private CharSequence mIdleText;
+    private CharSequence mCompleteText;
+    private CharSequence mErrorText;
+    private CharSequence mProgressText;
 
     private int mColorProgress;
     private int mColorIndicator;
@@ -198,10 +198,10 @@ public class CircularProgressButton extends Button {
             final int defaultProgressStrokeWidth = getResources().getDimensionPixelSize(R.dimen.cpb_progress_stroke_width);
             mProgressStrokeWidth = attr.getDimensionPixelSize(R.styleable.CircularProgressButton_cpb_progressStrokeWidth, defaultProgressStrokeWidth);
 
-            mIdleText = attr.getString(R.styleable.CircularProgressButton_cpb_textIdle);
-            mCompleteText = attr.getString(R.styleable.CircularProgressButton_cpb_textComplete);
-            mErrorText = attr.getString(R.styleable.CircularProgressButton_cpb_textError);
-            mProgressText = attr.getString(R.styleable.CircularProgressButton_cpb_textProgress);
+            mIdleText = attr.getText(R.styleable.CircularProgressButton_cpb_textIdle);
+            mCompleteText = attr.getText(R.styleable.CircularProgressButton_cpb_textComplete);
+            mErrorText = attr.getText(R.styleable.CircularProgressButton_cpb_textError);
+            mProgressText = attr.getText(R.styleable.CircularProgressButton_cpb_textProgress);
 
             mIconComplete = attr.getResourceId(R.styleable.CircularProgressButton_cpb_iconComplete, 0);
             mIconError = attr.getResourceId(R.styleable.CircularProgressButton_cpb_iconError, 0);
@@ -596,27 +596,27 @@ public class CircularProgressButton extends Button {
         background.setStrokeColor(color);
     }
 
-    public String getIdleText() {
+    public CharSequence getIdleText() {
         return mIdleText;
     }
 
-    public String getCompleteText() {
+    public CharSequence getCompleteText() {
         return mCompleteText;
     }
 
-    public String getErrorText() {
+    public CharSequence getErrorText() {
         return mErrorText;
     }
 
-    public void setIdleText(String text) {
+    public void setIdleText(CharSequence text) {
         mIdleText = text;
     }
 
-    public void setCompleteText(String text) {
+    public void setCompleteText(CharSequence text) {
         mCompleteText = text;
     }
 
-    public void setErrorText(String text) {
+    public void setErrorText(CharSequence text) {
         mErrorText = text;
     }
 
