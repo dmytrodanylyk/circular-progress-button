@@ -15,16 +15,11 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
 
-    applicationVariants.all { variant ->
-        def oldFile = variant.outputFile
-        def newPath = "${variant.name}" + "_" + "${variant.versionName}" + "_" + "${variant.versionCode}" + "_" + getDate() + ".apk";
-        variant.outputFile = new File(oldFile.parentFile, newPath)
-    }
 }
 
 def getDate() {
