@@ -20,6 +20,16 @@ dependencies {
 }
 ```
 
+### ProGuard
+
+If you are using proguard with your project, add following code to your proguard config file
+
+```
+-keepclassmembers class com.dd.StrokeGradientDrawable {
+    public void setStrokeColor(int);
+}
+```
+
 ### Contributions
 
 If you want to contribute to this library make sure you send pull request to **dev** branch.
