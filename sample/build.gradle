@@ -15,15 +15,39 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
 
+//    applicationVariants.all { variant ->
+//        def oldFile = variant.outputFile
+//        def newPath = "${variant.name}" + "_" + "${variant.versionName}" + "_" + "${variant.versionCode}" + "_" + getDate() + ".apk";
+//        variant.outputFile = new File(oldFile.parentFile, newPath)
+//    }
+
     applicationVariants.all { variant ->
-        def oldFile = variant.outputFile
-        def newPath = "${variant.name}" + "_" + "${variant.versionName}" + "_" + "${variant.versionCode}" + "_" + getDate() + ".apk";
-        variant.outputFile = new File(oldFile.parentFile, newPath)
+
+        variant.outputs.each { output ->
+
+            def apk = output.outputFile;
+            def newName;
+            def newPath = "${variant.name}" + "_" + "${variant.versionName}" + "_" + "${variant.versionCode}" + "_" + getDate() + ".apk";
+            // newName = apk.name.replace(".apk", "-v" + defaultConfig.versionName + "-" + variant.buildType.name.toUpperCase() + ".apk");
+//            if (variant.buildType.name == "release") {
+//                newName = apk.name.replace(".apk", "-v" + defaultConfig.versionName + "-release.apk");
+//            } else {
+//                newName = apk.name.replace(".apk", "-v" + defaultConfig.versionName + "-beta.apk");
+//            }
+
+            output.outputFile = new File(apk.parentFile, newPath);
+
+            if (output.zipAlign) {
+                output.outputFile = new File(apk.parentFile, newPath.replace("-unaligned", ""));
+            }
+
+            logger.info('INFO: Set outputFile to ' + output.outputFile + " for [" + output.name + "]");
+        }
     }
 }
 
