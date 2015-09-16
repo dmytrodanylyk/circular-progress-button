@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="cpb_stroke_width">4dp</dimen>
+    <dimen name="cpb_idle_stroke_width">4dp</dimen>
+    <dimen name="cpb_progress_stroke_width">4dp</dimen>
 </resources>
