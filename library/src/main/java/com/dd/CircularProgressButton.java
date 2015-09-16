@@ -38,10 +38,10 @@ public class CircularProgressButton extends Button {
 
     private StateManager mStateManager;
     private State mState;
-    private String mIdleText;
-    private String mCompleteText;
-    private String mErrorText;
-    private String mProgressText;
+    private CharSequence mIdleText;
+    private CharSequence mCompleteText;
+    private CharSequence mErrorText;
+    private CharSequence mProgressText;
 
     private int mColorProgress;
     private int mColorIndicator;
@@ -587,27 +587,27 @@ public class CircularProgressButton extends Button {
         background.setStrokeColor(color);
     }
 
-    public String getIdleText() {
+    public CharSequence getIdleText() {
         return mIdleText;
     }
 
-    public String getCompleteText() {
+    public CharSequence getCompleteText() {
         return mCompleteText;
     }
 
-    public String getErrorText() {
+    public CharSequence getErrorText() {
         return mErrorText;
     }
 
-    public void setIdleText(String text) {
+    public void setIdleText(CharSequence text) {
         mIdleText = text;
     }
 
-    public void setCompleteText(String text) {
+    public void setCompleteText(CharSequence text) {
         mCompleteText = text;
     }
 
-    public void setErrorText(String text) {
+    public void setErrorText(CharSequence text) {
         mErrorText = text;
     }
 
