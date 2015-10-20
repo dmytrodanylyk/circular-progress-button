@@ -79,18 +79,20 @@ public class CircularProgressButton extends Button {
     }
 
     private void init(Context context, AttributeSet attributeSet) {
-        mStrokeWidth = (int) getContext().getResources().getDimension(R.dimen.cpb_stroke_width);
-
-        initAttributes(context, attributeSet);
-
-        mMaxProgress = 100;
-        mState = State.IDLE;
-        mStateManager = new StateManager(this);
-
-        setText(mIdleText);
-
-        initIdleStateDrawable();
-        setBackgroundCompat(mIdleStateDrawable);
++        if(!isInEditMode()){
++            mStrokeWidth = (int) getContext().getResources().getDimension(R.dimen.cpb_stroke_width);
++    
++            initAttributes(context, attributeSet);
++    
++            mMaxProgress = 100;
++            mState = State.IDLE;
++            mStateManager = new StateManager(this);
++    
++            setText(mIdleText);
++    
++            initIdleStateDrawable();
++            setBackgroundCompat(mIdleStateDrawable);
++        }
     }
 
     private void initErrorStateDrawable() {
