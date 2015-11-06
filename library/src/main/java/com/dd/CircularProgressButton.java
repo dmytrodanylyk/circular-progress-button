@@ -252,10 +252,10 @@ public class CircularProgressButton extends Button {
             int top = mPaddingProgress;
             mAnimatedDrawable.setBounds(left, top, right, bottom);
             mAnimatedDrawable.setCallback(this);
-            mAnimatedDrawable.start();
         } else {
             mAnimatedDrawable.draw(canvas);
         }
+	    mAnimatedDrawable.start();
     }
 
     private void drawProgress(Canvas canvas) {
@@ -394,6 +394,9 @@ public class CircularProgressButton extends Button {
             } else {
                 setText(mCompleteText);
             }
+	        if(mAnimatedDrawable != null) {
+		        mAnimatedDrawable.stop();
+	        }
             mMorphingInProgress = false;
             mState = State.COMPLETE;
 
@@ -480,6 +483,9 @@ public class CircularProgressButton extends Button {
             } else {
                 setText(mErrorText);
             }
+	        if(mAnimatedDrawable != null) {
+		        mAnimatedDrawable.stop();
+	        }
             mMorphingInProgress = false;
             mState = State.ERROR;
 
@@ -500,6 +506,9 @@ public class CircularProgressButton extends Button {
             public void onAnimationEnd() {
                 removeIcon();
                 setText(mIdleText);
+	            if(mAnimatedDrawable != null) {
+		            mAnimatedDrawable.stop();
+	            }
                 mMorphingInProgress = false;
                 mState = State.IDLE;
 
