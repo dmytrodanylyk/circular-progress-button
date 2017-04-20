@@ -53,6 +53,12 @@ public class CircularProgressButton extends Button {
     private float mCornerRadius;
     private boolean mIndeterminateProgressMode;
     private boolean mConfigurationChanged;
+    private Runnable mProgressRunnable = new Runnable() {
+        @Override
+        public void run() {
+            setProgress(mProgress);
+        }
+    };
 
     private enum State {
         PROGRESS, IDLE, COMPLETE, ERROR
@@ -614,8 +620,8 @@ public class CircularProgressButton extends Button {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        if (changed) {
-            setProgress(mProgress);
+        if (mConfigurationChanged) {
+            post(mProgressRunnable);
         }
     }
 
@@ -638,7 +644,6 @@ public class CircularProgressButton extends Button {
             mIndeterminateProgressMode = savedState.mIndeterminateProgressMode;
             mConfigurationChanged = savedState.mConfigurationChanged;
             super.onRestoreInstanceState(savedState.getSuperState());
-            setProgress(mProgress);
         } else {
             super.onRestoreInstanceState(state);
         }
