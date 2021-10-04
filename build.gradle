@@ -2,15 +2,12 @@
 
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.14.2'
+        classpath 'com.android.tools.build:gradle:4.2.2'
     }
-}
-
-def isReleaseBuild() {
-    return version.contains("SNAPSHOT") == false
 }
 
 allprojects {
@@ -18,11 +15,10 @@ allprojects {
     group = GROUP
 
     repositories {
-        jcenter()
+        google()
+        mavenCentral()
         maven {
             url "https://oss.sonatype.org/content/repositories/snapshots/"
         }
     }
 }
-
-apply plugin: 'android-reporting'
