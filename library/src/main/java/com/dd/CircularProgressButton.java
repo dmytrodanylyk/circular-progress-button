@@ -3,6 +3,7 @@ package com.dd;
 import com.dd.circular.progress.button.R;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -38,17 +39,18 @@ public class CircularProgressButton extends Button {
 
     private StateManager mStateManager;
     private State mState;
-    private String mIdleText;
-    private String mCompleteText;
-    private String mErrorText;
-    private String mProgressText;
+    private CharSequence mIdleText;
+    private CharSequence mCompleteText;
+    private CharSequence mErrorText;
+    private CharSequence mProgressText;
 
     private int mColorProgress;
     private int mColorIndicator;
     private int mColorIndicatorBackground;
     private int mIconComplete;
     private int mIconError;
-    private int mStrokeWidth;
+    private int mIdleStrokeWidth;
+    private int mProgressStrokeWidth;
     private int mPaddingProgress;
     private float mCornerRadius;
     private boolean mIndeterminateProgressMode;
@@ -65,23 +67,27 @@ public class CircularProgressButton extends Button {
 
     public CircularProgressButton(Context context) {
         super(context);
-        init(context, null);
+        init(context, null, 0, 0);
     }
 
     public CircularProgressButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
+        init(context, attrs, 0, 0);
     }
 
-    public CircularProgressButton(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(context, attrs);
+    public CircularProgressButton(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(context, attrs, defStyleAttr, 0);
     }
 
-    private void init(Context context, AttributeSet attributeSet) {
-        mStrokeWidth = (int) getContext().getResources().getDimension(R.dimen.cpb_stroke_width);
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public CircularProgressButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init(context, attrs, defStyleAttr, defStyleRes);
+    }
 
-        initAttributes(context, attributeSet);
+    private void init(Context context, AttributeSet attributeSet, int defStyleAttr, int defStyleRes) {
+        initAttributes(context, attributeSet, defStyleAttr, defStyleRes);
 
         mMaxProgress = 100;
         mState = State.IDLE;
@@ -155,7 +161,7 @@ public class CircularProgressButton extends Button {
         drawable.setCornerRadius(mCornerRadius);
         StrokeGradientDrawable strokeGradientDrawable = new StrokeGradientDrawable(drawable);
         strokeGradientDrawable.setStrokeColor(color);
-        strokeGradientDrawable.setStrokeWidth(mStrokeWidth);
+        strokeGradientDrawable.setStrokeWidth(mIdleStrokeWidth);
 
         return strokeGradientDrawable;
     }
@@ -178,23 +184,34 @@ public class CircularProgressButton extends Button {
         }
     }
 
-    private void initAttributes(Context context, AttributeSet attributeSet) {
-        TypedArray attr = getTypedArray(context, attributeSet, R.styleable.CircularProgressButton);
+    private void initAttributes(Context context, AttributeSet attributeSet, int defStyleAttr, int defStyleRes) {
+        TypedArray attr = context.obtainStyledAttributes(attributeSet, R.styleable.CircularProgressButton, defStyleAttr, defStyleRes);
         if (attr == null) {
             return;
         }
 
         try {
 
-            mIdleText = attr.getString(R.styleable.CircularProgressButton_cpb_textIdle);
-            mCompleteText = attr.getString(R.styleable.CircularProgressButton_cpb_textComplete);
-            mErrorText = attr.getString(R.styleable.CircularProgressButton_cpb_textError);
-            mProgressText = attr.getString(R.styleable.CircularProgressButton_cpb_textProgress);
+            final int defaultIdleStrokeWidth = getResources().getDimensionPixelSize(R.dimen.cpb_idle_stroke_width);
+            mIdleStrokeWidth = attr.getDimensionPixelSize(R.styleable.CircularProgressButton_cpb_idleStrokeWidth, defaultIdleStrokeWidth);
+
+            final int defaultProgressStrokeWidth = getResources().getDimensionPixelSize(R.dimen.cpb_progress_stroke_width);
+            mProgressStrokeWidth = attr.getDimensionPixelSize(R.styleable.CircularProgressButton_cpb_progressStrokeWidth, defaultProgressStrokeWidth);
+
+            mIdleText = attr.getText(R.styleable.CircularProgressButton_cpb_textIdle);
+            mCompleteText = attr.getText(R.styleable.CircularProgressButton_cpb_textComplete);
+            mErrorText = attr.getText(R.styleable.CircularProgressButton_cpb_textError);
+            mProgressText = attr.getText(R.styleable.CircularProgressButton_cpb_textProgress);
+
+            if (mIdleText == null) { // Use native text attribute if 'cpb_textIdle' is empty
+                mIdleText = getText();
+            }
 
             mIconComplete = attr.getResourceId(R.styleable.CircularProgressButton_cpb_iconComplete, 0);
             mIconError = attr.getResourceId(R.styleable.CircularProgressButton_cpb_iconError, 0);
             mCornerRadius = attr.getDimension(R.styleable.CircularProgressButton_cpb_cornerRadius, 0);
             mPaddingProgress = attr.getDimensionPixelSize(R.styleable.CircularProgressButton_cpb_paddingProgress, 0);
+            mIndeterminateProgressMode = attr.getBoolean(R.styleable.CircularProgressButton_cpb_progressIndeterminate, false);
 
             int blue = getColor(R.color.cpb_blue);
             int white = getColor(R.color.cpb_white);
@@ -225,10 +242,6 @@ public class CircularProgressButton extends Button {
         return getResources().getColor(id);
     }
 
-    protected TypedArray getTypedArray(Context context, AttributeSet attributeSet, int[] attr) {
-        return context.obtainStyledAttributes(attributeSet, attr, 0, 0);
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -245,7 +258,7 @@ public class CircularProgressButton extends Button {
     private void drawIndeterminateProgress(Canvas canvas) {
         if (mAnimatedDrawable == null) {
             int offset = (getWidth() - getHeight()) / 2;
-            mAnimatedDrawable = new CircularAnimatedDrawable(mColorIndicator, mStrokeWidth);
+            mAnimatedDrawable = new CircularAnimatedDrawable(mColorIndicator, mProgressStrokeWidth);
             int left = offset + mPaddingProgress;
             int right = getWidth() - offset - mPaddingProgress;
             int bottom = getHeight() - mPaddingProgress;
@@ -262,7 +275,7 @@ public class CircularProgressButton extends Button {
         if (mProgressDrawable == null) {
             int offset = (getWidth() - getHeight()) / 2;
             int size = getHeight() - mPaddingProgress * 2;
-            mProgressDrawable = new CircularProgressDrawable(size, mStrokeWidth, mColorIndicator);
+            mProgressDrawable = new CircularProgressDrawable(size, mProgressStrokeWidth, mColorIndicator);
             int left = offset + mPaddingProgress;
             mProgressDrawable.setBounds(left, mPaddingProgress, left, mPaddingProgress);
         }
@@ -587,27 +600,27 @@ public class CircularProgressButton extends Button {
         background.setStrokeColor(color);
     }
 
-    public String getIdleText() {
+    public CharSequence getIdleText() {
         return mIdleText;
     }
 
-    public String getCompleteText() {
+    public CharSequence getCompleteText() {
         return mCompleteText;
     }
 
-    public String getErrorText() {
+    public CharSequence getErrorText() {
         return mErrorText;
     }
 
-    public void setIdleText(String text) {
+    public void setIdleText(CharSequence text) {
         mIdleText = text;
     }
 
-    public void setCompleteText(String text) {
+    public void setCompleteText(CharSequence text) {
         mCompleteText = text;
     }
 
-    public void setErrorText(String text) {
+    public void setErrorText(CharSequence text) {
         mErrorText = text;
     }
 
