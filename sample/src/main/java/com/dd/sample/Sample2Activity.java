@@ -1,7 +1,5 @@
 package com.dd.sample;
 
-import com.dd.CircularProgressButton;
-
 import android.animation.ValueAnimator;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -9,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+
+import com.dd.CircularProgressButton;
 
 /**
  * Integer Progress Sample
@@ -25,7 +25,7 @@ public class Sample2Activity extends Activity {
         setContentView(R.layout.ac_sample_2);
 
         ActionBar actionBar = getActionBar();
-        if(actionBar != null) {
+        if (actionBar != null) {
             actionBar.setTitle(R.string.IntegerProgressSample);
         }
 
