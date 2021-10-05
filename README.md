@@ -1,15 +1,9 @@
-:small_red_triangle: **Before using this library, read information below** :small_red_triangle:
-```
-This library is not more supported. 
-If you want to add new feature or fix a bug, grab source code and do it. If you think your
-fix or feature would be useful to other developers, I can add link of your repository to
-this README file. Use following e-mail to contact me: dmytrodanylyk@gmail.com
-Thank you for using my libraries.
-```
-
 **Note:** updated version of this library will be available [here](https://github.com/dmytrodanylyk/android-morphing-button).
 
-### Description [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.dmytrodanylyk.circular-progress-button/library/badge.png?style=flat)](http://goo.gl/cKevJjr) [![Android Arsenal](http://img.shields.io/badge/Android%20Arsenal-Circular%20Progress%20Button-brightgreen.png?style=flat)](http://android-arsenal.com/details/1/67)
+[![](https://jitpack.io/v/dmytrodanylyk/circular-progress-button.svg)](https://jitpack.io/#dmytrodanylyk/circular-progress-button)
+[![Android Arsenal](http://img.shields.io/badge/Android%20Arsenal-Circular%20Progress%20Button-brightgreen.png?style=flat)](http://android-arsenal.com/details/1/67)
+
+### Description
 
 Android Button which can morph to Circular Progress
 
@@ -26,8 +20,17 @@ Android Button which can morph to Circular Progress
 The lib is available on Maven Central, you can find it with [Gradle, please]
 
 ```
+allprojects {
+   repositories {
+      ...
+      maven { url 'https://jitpack.io' }
+   }
+}
+```
+
+```
 dependencies {
-    implementation 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'
+    implementation 'com.github.dmytrodanylyk:circular-progress-button:$latest'
 }
 ```
 
