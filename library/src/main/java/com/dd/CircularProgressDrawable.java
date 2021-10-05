@@ -1,5 +1,6 @@
 package com.dd;
 
+import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
@@ -54,9 +55,10 @@ class CircularProgressDrawable extends Drawable {
     public void setColorFilter(ColorFilter cf) {
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public int getOpacity() {
-        return 1;
+        return 1; // why ?
     }
 
     private RectF mRectF;
