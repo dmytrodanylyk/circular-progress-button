@@ -91,18 +91,18 @@ class CircularAnimatedDrawable extends Drawable implements Animatable {
         fBounds.bottom = bounds.bottom - mBorderWidth / 2f - .5f;
     }
 
-    private Property<CircularAnimatedDrawable, Float> mAngleProperty  =
+    private Property<CircularAnimatedDrawable, Float> mAngleProperty =
             new Property<CircularAnimatedDrawable, Float>(Float.class, "angle") {
-        @Override
-        public Float get(CircularAnimatedDrawable object) {
-            return object.getCurrentGlobalAngle();
-        }
+                @Override
+                public Float get(CircularAnimatedDrawable object) {
+                    return object.getCurrentGlobalAngle();
+                }
 
-        @Override
-        public void set(CircularAnimatedDrawable object, Float value) {
-            object.setCurrentGlobalAngle(value);
-        }
-    };
+                @Override
+                public void set(CircularAnimatedDrawable object, Float value) {
+                    object.setCurrentGlobalAngle(value);
+                }
+            };
 
     private Property<CircularAnimatedDrawable, Float> mSweepProperty
             = new Property<CircularAnimatedDrawable, Float>(Float.class, "arc") {

@@ -1,12 +1,12 @@
 package com.dd.sample;
 
-import com.dd.CircularProgressButton;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.dd.CircularProgressButton;
 
 /**
  * Progress Padding Sample
@@ -23,7 +23,7 @@ public class Sample4Activity extends Activity {
         setContentView(R.layout.ac_sample_4);
 
         ActionBar actionBar = getActionBar();
-        if(actionBar != null) {
+        if (actionBar != null) {
             actionBar.setTitle(R.string.ProgressPaddingSample);
         }
 

@@ -7,29 +7,29 @@
     android:orientation="vertical">
 
     <com.dd.CircularProgressButton
-            android:id="@+id/circularButton1"
-            android:layout_width="196dp"
-            android:layout_height="64dp"
-            android:layout_marginTop="16dp"
-            android:textColor="@color/cpb_white"
-            android:textSize="18sp"
-            app:cpb_cornerRadius="48dp"
-            app:cpb_paddingProgress="10dp"
-            app:cpb_textComplete="@string/Complete"
-            app:cpb_textError="@string/Error"
-            app:cpb_textIdle="@string/Upload" />
+        android:id="@+id/circularButton1"
+        android:layout_width="196dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/cpb_white"
+        android:textSize="18sp"
+        app:cpb_cornerRadius="48dp"
+        app:cpb_paddingProgress="10dp"
+        app:cpb_textComplete="@string/Complete"
+        app:cpb_textError="@string/Error"
+        app:cpb_textIdle="@string/Upload" />
 
     <com.dd.CircularProgressButton
-            android:id="@+id/circularButton2"
-            android:layout_width="196dp"
-            android:layout_height="64dp"
-            android:layout_marginTop="16dp"
-            android:textColor="@color/cpb_white"
-            android:textSize="18sp"
-            app:cpb_cornerRadius="48dp"
-            app:cpb_paddingProgress="10dp"
-            app:cpb_textComplete="@string/Complete"
-            app:cpb_textError="@string/Error"
-            app:cpb_textIdle="@string/Upload" />
+        android:id="@+id/circularButton2"
+        android:layout_width="196dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/cpb_white"
+        android:textSize="18sp"
+        app:cpb_cornerRadius="48dp"
+        app:cpb_paddingProgress="10dp"
+        app:cpb_textComplete="@string/Complete"
+        app:cpb_textError="@string/Error"
+        app:cpb_textIdle="@string/Upload" />
 
 </LinearLayout>
