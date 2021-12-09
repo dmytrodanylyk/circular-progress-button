@@ -31,8 +31,8 @@ class MorphingAnimation {
 
     private float mPadding;
 
-    private TextView mView;
-    private StrokeGradientDrawable mDrawable;
+    private final TextView mView;
+    private final StrokeGradientDrawable mDrawable;
 
     public MorphingAnimation(TextView viewGroup, StrokeGradientDrawable drawable) {
         mView = viewGroup;
