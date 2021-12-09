@@ -2,7 +2,7 @@ package com.dd;
 
 class StateManager {
 
-    private boolean mIsEnabled;
+    private final boolean mIsEnabled;
     private int mProgress;
 
     public StateManager(CircularProgressButton progressButton) {

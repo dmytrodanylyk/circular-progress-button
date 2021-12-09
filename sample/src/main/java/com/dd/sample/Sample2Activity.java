@@ -29,7 +29,7 @@ public class Sample2Activity extends Activity {
             actionBar.setTitle(R.string.IntegerProgressSample);
         }
 
-        final CircularProgressButton circularButton1 = (CircularProgressButton) findViewById(R.id.circularButton1);
+        final CircularProgressButton circularButton1 = findViewById(R.id.circularButton1);
         circularButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +41,7 @@ public class Sample2Activity extends Activity {
             }
         });
 
-        final CircularProgressButton circularButton2 = (CircularProgressButton) findViewById(R.id.circularButton2);
+        final CircularProgressButton circularButton2 = findViewById(R.id.circularButton2);
         circularButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

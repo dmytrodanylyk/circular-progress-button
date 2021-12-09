@@ -53,7 +53,7 @@ public class CircularProgressButton extends Button {
     private float mCornerRadius;
     private boolean mIndeterminateProgressMode;
     private boolean mConfigurationChanged;
-    private Runnable mProgressRunnable = new Runnable() {
+    private final Runnable mProgressRunnable = new Runnable() {
         @Override
         public void run() {
             setProgress(mProgress);
