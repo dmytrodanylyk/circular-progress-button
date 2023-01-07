@@ -1,4 +1,4 @@
-name: Changelog vs Release
+name: Release
 
 on:
   push:
@@ -14,14 +14,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Build Changelog
-        id: github_release
-        uses: mikepenz/release-changelog-builder-action@main
-        with:
-          configuration: ".github/changelog-configuration.json"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Install JDK ${{ matrix.java_version }}
         uses: actions/setup-java@v3
         with:
@@ -29,10 +21,10 @@ jobs:
           java-version: 11
 
       - name: Install Android SDK
-        uses: malinskiy/action-android/install-sdk@release/0.1.2
+        uses: malinskiy/action-android/install-sdk@release/0.1.4
 
       - name: Build project
-        run: ./gradlew clean build
+        run: ./gradlew assembleRelease
         env:
           VERSION: ${{ github.ref }}
 
