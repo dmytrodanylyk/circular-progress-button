@@ -1,7 +1,7 @@
 import org.gradle.internal.jvm.Jvm
 
 buildscript {
-    ext.kotlin_version = '1.9.0'
+    ext.kotlin_version = '1.9.10'
     repositories {
         google()
         mavenCentral()
