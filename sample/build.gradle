@@ -1,11 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 31
-
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 31
+        compileSdk 34
+        targetSdkVersion 34
         applicationId "com.dd.sample.progressbutton"
         versionCode 1
         versionName "1.0"

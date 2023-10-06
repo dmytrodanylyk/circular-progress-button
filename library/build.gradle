@@ -5,11 +5,10 @@ plugins {
 }
 
 android {
-    compileSdkVersion 33
-
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 33
+        compileSdk 34
+        targetSdkVersion 34
     }
     buildTypes {
         release {
