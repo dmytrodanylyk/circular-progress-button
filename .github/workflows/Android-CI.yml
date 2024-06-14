@@ -5,13 +5,11 @@ on:
     branches:
       - master
   pull_request:
-    branches:
-      - master
 
 jobs:
   buildTest:
     name: Build & Test JDK ${{ matrix.java_version }}
-    runs-on: macOS-latest
+    runs-on: macOS-14
     strategy:
       matrix:
         java_version: [ 17 ]
@@ -26,7 +24,7 @@ jobs:
           distribution: 'adopt'
           java-version: ${{ matrix.java_version }}
       - name: Install Android SDK
-        uses: malinskiy/action-android/install-sdk@release/0.1.4
+        uses: hannesa2/action-android/install-sdk@0.1.16.7
       - name: Build project
         run: ./gradlew assembleDebug
 
@@ -46,7 +44,8 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: ${{ matrix.java_version }}
+      - uses: gradle/wrapper-validation-action@v3
       - name: Install Android SDK
-        uses: malinskiy/action-android/install-sdk@release/0.1.4
+        uses: hannesa2/action-android/install-sdk@0.1.16.7
       - name: Code checks
         run: ./gradlew check
