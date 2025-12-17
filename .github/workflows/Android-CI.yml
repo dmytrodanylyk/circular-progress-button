@@ -19,7 +19,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install JDK ${{ matrix.java_version }}
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'adopt'
           java-version: ${{ matrix.java_version }}
@@ -40,7 +40,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install JDK ${{ matrix.java_version }}
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'adopt'
           java-version: ${{ matrix.java_version }}
