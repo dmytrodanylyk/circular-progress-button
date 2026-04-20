@@ -563,7 +563,7 @@ public class CircularProgressButton extends Button {
                 morphIdleToComplete();
             }
         } else if (mProgress > IDLE_STATE_PROGRESS) {
-            if (mState == State.IDLE) {
+            if (mState == State.IDLE || mState == State.ERROR) {
                 morphToProgress();
             } else if (mState == State.PROGRESS) {
                 invalidate();
