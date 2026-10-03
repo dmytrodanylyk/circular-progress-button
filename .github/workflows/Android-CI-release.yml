@@ -37,7 +37,7 @@ jobs:
           commit-ish: HEAD
 
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{steps.tagger.outputs.tag}}
           name: ${{steps.tagger.outputs.tag}}
