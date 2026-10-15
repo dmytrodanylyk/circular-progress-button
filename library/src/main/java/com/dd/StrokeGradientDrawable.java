@@ -7,7 +7,7 @@ public class StrokeGradientDrawable {
     private int mStrokeWidth;
     private int mStrokeColor;
 
-    private GradientDrawable mGradientDrawable;
+    private final GradientDrawable mGradientDrawable;
 
     public StrokeGradientDrawable(GradientDrawable drawable) {
         mGradientDrawable = drawable;

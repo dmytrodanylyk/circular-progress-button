@@ -1,0 +1,51 @@
+name: PullRequest
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  buildTest:
+    name: Build & Test JDK ${{ matrix.java_version }}
+    runs-on: macOS-14
+    strategy:
+      matrix:
+        java_version: [ 17 ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Install JDK ${{ matrix.java_version }}
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'adopt'
+          java-version: ${{ matrix.java_version }}
+      - name: Install Android SDK
+        uses: hannesa2/action-android/install-sdk@0.18.1
+      - name: Build project
+        run: ./gradlew assembleDebug
+
+  Check:
+    name: Check
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java_version: [ 17 ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Install JDK ${{ matrix.java_version }}
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'adopt'
+          java-version: ${{ matrix.java_version }}
+      - uses: gradle/wrapper-validation-action@v3
+      - name: Install Android SDK
+        uses: hannesa2/action-android/install-sdk@0.18.1
+      - name: Code checks
+        run: ./gradlew check

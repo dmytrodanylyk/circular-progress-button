@@ -2,7 +2,7 @@ package com.dd;
 
 class StateManager {
 
-    private boolean mIsEnabled;
+    private final boolean mIsEnabled;
     private int mProgress;
 
     public StateManager(CircularProgressButton progressButton) {
@@ -25,7 +25,7 @@ class StateManager {
     public void checkState(CircularProgressButton progressButton) {
         if (progressButton.getProgress() != getProgress()) {
             progressButton.setProgress(progressButton.getProgress());
-        } else if(progressButton.isEnabled() != isEnabled()) {
+        } else if (progressButton.isEnabled() != isEnabled()) {
             progressButton.setEnabled(progressButton.isEnabled());
         }
     }

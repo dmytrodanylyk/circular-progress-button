@@ -1,5 +1,6 @@
 package com.dd;
 
+import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
@@ -11,10 +12,10 @@ import android.graphics.drawable.Drawable;
 class CircularProgressDrawable extends Drawable {
 
     private float mSweepAngle;
-    private float mStartAngle;
-    private int mSize;
-    private int mStrokeWidth;
-    private int mStrokeColor;
+    private final float mStartAngle;
+    private final int mSize;
+    private final int mStrokeWidth;
+    private final int mStrokeColor;
 
     public CircularProgressDrawable(int size, int strokeWidth, int strokeColor) {
         mSize = size;
@@ -54,9 +55,10 @@ class CircularProgressDrawable extends Drawable {
     public void setColorFilter(ColorFilter cf) {
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public int getOpacity() {
-        return 1;
+        return 1; // why ?
     }
 
     private RectF mRectF;

@@ -1,7 +1,5 @@
 package com.dd.sample;
 
-import com.dd.CircularProgressButton;
-
 import android.animation.ValueAnimator;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -9,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+
+import com.dd.CircularProgressButton;
 
 /**
  * Integer Progress Sample
@@ -25,11 +25,11 @@ public class Sample2Activity extends Activity {
         setContentView(R.layout.ac_sample_2);
 
         ActionBar actionBar = getActionBar();
-        if(actionBar != null) {
+        if (actionBar != null) {
             actionBar.setTitle(R.string.IntegerProgressSample);
         }
 
-        final CircularProgressButton circularButton1 = (CircularProgressButton) findViewById(R.id.circularButton1);
+        final CircularProgressButton circularButton1 = findViewById(R.id.circularButton1);
         circularButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +41,7 @@ public class Sample2Activity extends Activity {
             }
         });
 
-        final CircularProgressButton circularButton2 = (CircularProgressButton) findViewById(R.id.circularButton2);
+        final CircularProgressButton circularButton2 = findViewById(R.id.circularButton2);
         circularButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

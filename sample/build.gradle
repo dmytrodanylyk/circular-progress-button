@@ -1,40 +1,26 @@
-import java.text.SimpleDateFormat
-
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion '21.1.2'
-
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 21
-        applicationId project.PACKAGE_NAME
-        versionCode Integer.parseInt(project.VERSION_CODE)
-        versionName project.VERSION_NAME
+        compileSdk 34
+        targetSdkVersion 34
+        applicationId "com.dd.sample.progressbutton"
+        versionCode 1
+        versionName "1.0"
     }
     buildTypes {
         release {
-            runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
-
-    applicationVariants.all { variant ->
-        def oldFile = variant.outputFile
-        def newPath = "${variant.name}" + "_" + "${variant.versionName}" + "_" + "${variant.versionCode}" + "_" + getDate() + ".apk";
-        variant.outputFile = new File(oldFile.parentFile, newPath)
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
-}
-
-def getDate() {
-    def formatter = new SimpleDateFormat('dd-MM-yyyy');
-    def date = new Date();
-    return formatter.format(date);
+    namespace 'com.dd.sample'
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-//    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3-SNAPSHOT@aar'
-    compile project(':library')
+    implementation project(':library')
 }
